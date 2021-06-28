@@ -1,0 +1,169 @@
+ADMIN
+    [X] Criar Lawyer store (Carregar lawyer a partir do user Id)
+    [X] Aplicar Lawyer store ao invés de authStore nas páginas de advogados
+    Calendário
+        [x] Pegar informação do dia
+        [x] Layout do Card de informação do dia
+        [x] Modal de seleção do cliente para marcar reunião
+        [x] Preencher calendário do antd com as reuniões
+    Cliente
+        [X] Edição da reunião
+        [X] Exclusão da reunião
+        [X] Edição do usuário
+        [X] Preencher card de detalhes do cliente
+        [X] Ajustar Layout vida contributiva
+        [X] Ajustar Layout dos documentos assinados
+        [x] Ajustar Layout do header do Card
+        [x] Advogado anexar documento do Cliente
+        [X] Remover vinculação de advogados
+        [X] Só poder excluir dados do cliente se for admin
+        [X] Data de vencimento do pagamento
+        [X] Pagamentos em aberto
+        [x] Advogado baixar boleto
+        [x] Mais informações do pagamento
+    Documentos
+        [X] Exclusão de documentos
+        [X] Listagem de documentos assinados ou não
+        [X] Upload de documentos (Assinatura ou Não)
+        [X] Loading nos botões
+    Processos
+        [X] Listagem dos processos
+        [X] Listagem de Notas Internas por processo
+        [X] Exclusão dos processos
+        [X] Criação de nota interna
+        [X] Exclusão de nota interna
+        [X] Vinculação de processos c/ advogados e clientes
+        [X] Andamentos internos privados e públicos
+        [] Trocar status para array e salvar o andamento
+        [] Email de quando o status atualizar
+        [X] Deletar processo somente admin
+    Pagamentos
+        [X] Gerar pagamento (Podendo ser parcelado no cartão ou boleto)
+        [x] Listar pagamentos realizados pelo cliente
+        [X] Data para vencimento do pagamento
+        [X] Corrigir o box shadow
+    Advogados
+        [x] Listagem de advogados
+        [x] Cadastro de usuário do teams e grupo
+        [x] Usar calendário default do teams
+        [x] Checkbox para indicar se é ou não super admin
+        [X] Renovação automática de token
+        [X] Permitir cadastrar advogado sem teams id
+        [X] Retirar especialidade
+        [X] Desabilitar seleção quando novo estiver selecionado
+    Menu Principal
+        [X] Remover card de usuários se o usuário não for super_admin
+        [X] Remover card de inadimplentes
+    Redefinir Senha
+        [X] Redirecionamento para o menu
+    Login
+        [] Esqueceu a senha
+        [X] Login usando enter
+    Nova Senha
+        [x] Trocar a senha
+    Tela de Perfil
+        [x] Criar toda (Baseada no form da tela de advogados)
+    Perfis
+        [x] Adicionar valor de honorário do perfil (Acrescentar tbm no aceite de honorário)
+
+GERAL
+    [X] Header quebrando com nomes grandes
+    [] Trocar fotos
+    Sessão
+        [x] Persistir sessão do store
+        [x] Atualizar usuário logado
+        [] Checar chamadas duplicadas
+    Layout
+        [x] Corrigir header
+        [x] Ajustar cards
+        [] Aplicar mobile
+        [x] Ajustar Layout do menu
+    Callbacks
+        [] Resolver todos os warnings
+
+BUGS CORRIGIDOS
+    Cadastro
+        [X] Erro ao escolher o primeiro profile de benefícios
+
+CLIENT
+    Login
+        [X] Login com CPF (Backend e Frontend)
+    Geral
+        [x] Ajustar redirecionamentos
+        [] Mudar imagens do Content Header
+        [X] Adicionar validação de CPF no Cadastro
+        [X] Adicionar formatação de campos de datas, CPF e telefone
+        [] Política de privacidade
+    Calendário
+        [x] Checagem de se o usuário já pagou para liberar a área  
+        [x] Listar os dias e horários com base na disponibilidade dos advogados
+        [x] Agendar reunião
+        [x] Listagem das reuniões marcadas
+        [] Excluir reunião
+        [] Bloquear marcação se já tiver uma agendada
+        [] Mostrar se o advogado tiver marcado
+    Documentos
+        [x] Modal de upload do documento
+        [X] Teste de upload do documento
+        [x] Colocar no banco array de documentos por perfil e usar nos documentos
+        [x] Exclusão dos documentos
+        [X] Loading nos botões
+    Assinatura de Documentos
+        [x] Listagem dos documentos
+        [x] Assinatura do documento
+        [x] Testar embedded quando a API de testes estiver funcionando
+        [x] Handle para salvar o documento assinado no banco de dados
+        [] Lista de documentos já assinados
+        [] Mensagem de que não tem documentos
+    Processos
+        [X] Listagem dos processos
+    Aceite
+        [X] Bloquear se não marcar o checkbox
+        [] Salvar informação do aceite
+        [] Mudar texto
+    Contrato
+        [] Não assinatura do contrato
+        [] Assinatura do contrato
+        [] Mudar textos
+    Menu
+        [] Ocultar menus com base no pagamento
+    Registro com Sucesso
+        [x] Colocar textos
+        [x] Ajustar títulos
+        [x] Ajustar redirecionamentos
+    Pagamentos
+        [x] Ajustar botão da geração de boletos (Se o boleto já estiver gerado, não ter o botão de gerar, e sim só o link (Ajustar layout))
+        [x] Pagamentos via cartão de crédito (Lógica pronta, falta ajustar o redirecionamento da rota pro Iugu no backend por conta do CORS)
+        [] CORS no container do frontend
+        [x] Checagem de pagamento confirmado
+        [x] Texto do pagamento por boleto
+        [] Verificar messagem de quando o boleto é pago
+        [x] Inserir número de parcelas para cartão de crédito
+    Apresentação
+        [x] Formulário de vida contributiva dinâmico
+        [x] Cards no formulário de vida contributiva
+        [x] Caixa de texto com "resuma seu problema"
+        [x] Mensagem para quando tentar cadastrar com um CPF já existente
+    Tela de Perfil
+        [x] Criar toda (Baseada no form da tela de advogados)
+        [x] Adicionar troca de e-mail
+
+Bugs e Features Semana 01
+
+[] Limitar tamanho do texto para os documentos.
+[] Hover de descrição do documento (Fluxo que precisa ser implementado.)
+[] Notificação de usuário existente ou senha incorreta.
+[] Info de endereço pelo preenchimento do CEP.
+[] Gerar contrato em PDF com dados preenchidos.
+[] Tooltip com texto explicativo quando passar mouse em cima de um ícone de ajuda.
+[] Ignorar honorários na verificação de inadimplência.
+[] Açao de clicar e ir direto pro andamento (NÃO FAZER.)
+[] Regex para verificar número do processo.
+[] Associar processos automaticamente.
+[] Corrigir Bug de carregamento do calendário na área do advogado.
+[x] Se o advogado marcar reunião, aparecer pro cliente mesmo sem pagar.
+[x] Bloquear visualização da tela cliente para o user Advogado.
+[x] Colocar o nome do usuário logado quando passar o mouse em cima do boneco de perfil do usuário.
+
+
+         

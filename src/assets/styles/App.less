@@ -1,0 +1,254 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@900&display=swap');
+// @import '~antd/dist/antd.less';
+@import '~antd/lib/style/themes/default.less';
+@import 'admin.less';
+
+@bocayuva-border-radius: 5px;
+@bocayuva-box-shadow: 0px 3px 6px #00000029;
+@bocayuva-input-box-shadow: 0px 0px 3px #33333380;
+@bocayuva-header-color: #015882;
+@bocayuva-list-header-color: #D8B57E;
+@bocayuva-clicked-color: #F8F0E3;
+@bocayuva-list-row-color: #F8F8F8;
+@bocayuva-danger-color: #A81A1A;
+@bocayuva-black-color: #0a0a0a;
+@bocayuva-blue-color: #000F34;
+@bocayuva-bg-color: #F6F6F6;
+@bocayuva-tab-title-color: #F6F6F6;
+@bocayuva-yellow:#FBB829;
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans', sans-serif;    
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+.text{
+    font-family: 'Open Sans', sans-serif;    
+    font-size: 16px;
+    color: @bocayuva-black-color;
+}
+
+
+// Propriedades adicionar que não existem no less do antd
+.custom-calendar {
+    border-radius: @bocayuva-border-radius; 
+    // box-shadow: @bocayuva-box-shadow; 
+}
+
+.custom-header {
+    box-shadow: @bocayuva-box-shadow;
+}
+
+.custom-card {
+    box-shadow: @bocayuva-box-shadow; 
+}
+
+.custom-grid-card {
+    &:extend(.custom-card);
+    &:hover {
+        background-color: @bocayuva-clicked-color;
+    }
+}
+
+.custom-table {
+    box-shadow: @bocayuva-box-shadow;
+    border-radius: @bocayuva-border-radius;
+}
+
+.custom-input {
+    border-radius: @bocayuva-border-radius;
+    box-shadow: @bocayuva-input-box-shadow;
+}
+
+.custom-tab-title {
+    color: @bocayuva-tab-title-color;
+    font-size: 20px;
+    font-family: 'Lato'
+}
+
+.custom-item-title {
+    color: @bocayuva-blue-color;
+    font-size: 20px;
+    font-family: 'Lato'
+}
+
+.custom-list-title {
+    color: @bocayuva-header-color;
+    font-size: 20px;
+    font-family: 'Lato'
+}
+
+.custom-tab-bar {
+    background: @bocayuva-header-color;
+    border-radius: @bocayuva-border-radius @bocayuva-border-radius 0px 0px;
+}
+
+.ant-tabs {
+    &-nav {
+        display: flex;
+        background: @bocayuva-header-color;
+        border-radius: @bocayuva-border-radius @bocayuva-border-radius 0px 0px;
+        .ant-tabs-tab {
+            flex-grow: 1;
+            //font-weight: bold;
+            margin-right: 10px;
+            margin-left: 10px;
+            width: 100%;
+            text-align: center;
+        }
+    }
+}
+
+.ant-tabs-ink-bar {
+    border-bottom: 3px solid #FBB829;
+}
+
+.ant-table-tbody > tr.ant-table-row-level-0:hover > td {
+    cursor: pointer;
+}
+
+  
+.ant-fullcalendar-header{
+    display:none;
+}
+
+.custom-list-header {
+    color: @bocayuva-list-header-color;
+}
+
+.custom-list-item {
+    background-color: @bocayuva-list-row-color;
+    border-radius: @bocayuva-border-radius;
+    margin-bottom: 8px;
+    box-shadow: @bocayuva-box-shadow;
+}
+
+.custom-list-item-selectable {
+    &:extend(.custom-list-item);
+    cursor: pointer;
+    &:hover {
+        background-color: @bocayuva-clicked-color;
+    }
+}
+
+.custom-card-item-selectable {
+    cursor: pointer;
+    &:hover {
+        background-color: @bocayuva-list-row-color;
+    }
+}
+
+.custom-radio-button-group {
+    color: @bocayuva-input-box-shadow;
+    border-width: @bocayuva-border-radius;
+}
+
+.custom-select {
+    box-shadow: 0px 0px 3px #33333380;
+    border-radius: 5px;
+}
+
+.custom-content {
+    background-color: @bocayuva-bg-color;
+}
+
+.custom-layout {
+    background-color: @bocayuva-bg-color;
+}
+
+/* .card-tabs-custom > .ant-tabs-nav {
+    height: 180px;
+    margin-top: -16px;
+    background: #EFDEC2;
+} */
+
+.card-tabs-custom > .ant-tabs .ant-tabs-content {
+    margin-top: -16px;
+    background: #ffffff;
+    box-shadow: @bocayuva-box-shadow;
+    border-radius: @bocayuva-border-radius;
+}
+
+.custom-carousel {
+    background-color: @bocayuva-bg-color;
+}
+
+/*
+.card-tabs-custom > .ant-tabs-card .ant-tabs-content > .ant-tabs-tabpane {
+    background: #FFFFFF;
+    padding: 16px;
+    border-radius: @bocayuva-border-radius;
+    box-shadow: @bocayuva-box-shadow;
+}
+.card-tabs-custom > .ant-tabs-card > .ant-tabs-nav::before {
+    display: none;
+} */
+
+/* .custom-danger {
+    background-color: #A81A1A; 
+    color: #FFFFFF; 
+    border-color: #A81A1A;
+} */
+
+// Informações de display
+.display-item {
+    display: flex;
+    align-items: center;
+}
+
+.item-center {
+    &:extend(.display-item);
+    justify-content: center;
+}
+
+.item-center-title {
+    &:extend(.item-center);
+    flex-direction: column;
+}
+ 
+.item-right {
+    &:extend(.display-item);
+    justify-content: flex-end;
+}
+
+.item-left {
+    &:extend(.display-item);
+    justify-content: flex-start;
+}
+
+.content-header {
+    background-color: @bocayuva-bg-color;
+}
+
+.title {
+    font-family: 'Lato', sans-serif;
+    font-size: 47px;
+    color: @bocayuva-blue-color;
+}
+
+.subtitle {
+    font-family: 'Lato', sans-serif;    
+    font-size: 20px;
+    color: @bocayuva-blue-color;
+}
+
+.back-arrow {
+    cursor: pointer;
+}
+
+.presentation-header-row {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 10vh;
+    margin-right: 10vh;
+    margin-top: 2vh;
+    .presentation-header-col {
+        display: flex;
+        flex-direction: row;
+    }
+}

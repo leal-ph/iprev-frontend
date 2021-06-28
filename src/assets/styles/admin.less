@@ -1,0 +1,65 @@
+@bocayuva-border-radius: 5px;
+@bocayuva-box-shadow: 0px 3px 6px #00000029;
+@bocayuva-input-box-shadow: 0px 0px 3px #33333380;
+@bocayuva-header-color: #EFDEC2;
+@bocayuva-list-header-color: #D8B57E;
+@bocayuva-list-row-color: #F8F8F8;
+@bocayuva-danger-color: #A81A1A;
+
+// Propriedades adicionar que não existem no less do antd
+.contentMenus{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 18vh;
+    
+    .card-menu{
+        cursor: pointer;
+        border-radius: @bocayuva-border-radius; 
+        box-shadow: @bocayuva-box-shadow; 
+        width: 20vw;
+        max-height: 45vh;
+        margin: 0 10px;
+        img{
+            border-radius: @bocayuva-border-radius;
+            width: 15vw;
+            margin-top: -15vh;
+            max-height: 32vh;
+        }
+        .subtitle{
+            text-align: center;
+            font-size: 24px;
+            margin-top: 10px;
+        }
+        .text{
+            text-align: center;
+            font-size: 14px;
+            margin-top: -2vh;
+            max-width: 25vw;
+        }
+    }
+}
+
+.card-menu{
+    cursor: pointer;
+    border-radius: @bocayuva-border-radius; 
+    box-shadow: @bocayuva-box-shadow;
+    img{
+        border-radius: @bocayuva-border-radius;
+    }
+    .subtitle{
+        text-align: center;
+        font-size: 24px;
+        margin-top: 10px;
+    }
+    .text{
+        text-align: center;
+        font-size: 14px;
+        margin-top: -2vh;
+    }
+}
+
+.rcw-conversation-container > .rcw-header {
+    background-color: red;
+  }

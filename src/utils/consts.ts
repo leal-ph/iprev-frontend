@@ -1,0 +1,3 @@
+export const IUGU_ACC_ID = 'AB6745DB57964DFBBEC6B77ACFEBE57E'
+
+export const PREFIX_URL = '/api'
