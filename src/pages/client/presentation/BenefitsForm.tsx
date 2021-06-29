@@ -12,32 +12,13 @@ import { ResponseStatus } from '~/types'
 import { useMediaQuery } from 'react-responsive'
 
 const BenefitsForm = observer(() => {
-  const { profileStore, clientStore } = useStores()
+  // const { profileStore, clientStore } = useStores()
 
   const history = useHistory()
 
   const isPortrait = useMediaQuery({ query: '(orientation: portrait)' })
 
   const additionalStyle = isPortrait ? { maxHeight: '100vh' } : { height: '30vh' }
-
-  const onBenefitSelect = useCallback(
-    async (profileId: string) => {
-      try {
-        const response = await clientStore.updateProfile(profileId)
-        if (response === ResponseStatus.SUCCESS) {
-          history.push('/client/form')
-        }
-      } catch (error) {
-        console.error(error)
-      }
-      // history.push('/client/form')
-    },
-    [clientStore, history],
-  )
-
-  useEffect(() => {
-    profileStore.loadAll()
-  }, [profileStore])
 
   return (
     <ClientLayout
@@ -54,27 +35,7 @@ const BenefitsForm = observer(() => {
               marginRight: '4vw',
               marginLeft: '4vw',
             }}
-          >
-            {profileStore.profiles.map((p) => {
-              return (
-                <Col span={isPortrait ? 24 : 6} key={p._id}>
-                  <Card
-                    className="custom-grid-card"
-                    style={{
-                      ...additionalStyle,
-                      margin: '10px',
-                      overflowY: 'auto',
-                      cursor: 'pointer',
-                    }}
-                    onClick={() => onBenefitSelect(p._id)}
-                  >
-                    <span className="subtitle">{p.title}</span>
-                    <p>{p.text}</p>
-                  </Card>
-                </Col>
-              )
-            })}
-          </Row>
+          ></Row>
         </PresentationLayout>
       }
     />

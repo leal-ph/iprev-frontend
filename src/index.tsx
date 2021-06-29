@@ -16,6 +16,7 @@ import AdminLoginScreen from '~/pages/admin/AdminLoginScreen'
 import AdminNewPassScreen from './pages/admin/AdminNewPassScreen'
 import LifeContribForm from './pages/client/presentation/LifeContribForm'
 import BenefitsForm from './pages/client/presentation/BenefitsForm'
+import ClientBenefitsScreen from './pages/client/benefits/BenefitsScreen'
 import AdditionalForm from './pages/client/presentation/AdditionalForm'
 import RegisterSuccessScreen from './pages/client/main/RegisterSuccessScreen'
 import AceiteScreen from './pages/client/main/AceiteScreen'
@@ -37,7 +38,7 @@ import {
 } from './pages/Routes'
 import ClientProfile from './pages/client/ClientProfile'
 import LawyerProfile from './pages/admin/LawyerProfile'
-import ProfilesScreen from './pages/admin/client/ProfilesScreen'
+import BenefitsScreen from './pages/admin/client/BenefitsScreen'
 
 ReactDOM.render(
   <BrowserRouter>
@@ -50,6 +51,7 @@ ReactDOM.render(
       <Route path="/client/form" component={LifeContribForm} />
       <Route path="/client/additional" component={AdditionalForm} />
       <Route path="/client/benefits" component={BenefitsForm} />
+      <Route path="/client/benefit" component={ClientBenefitsScreen} />
       <Route path="/client/registersuccess" component={RegisterSuccessScreen} />
       <Route path="/client/aceite" component={AceiteScreen} />
       <Route path="/client/contract" component={ContractScreen} />
@@ -67,7 +69,7 @@ ReactDOM.render(
       <Route path="/admin/recover" component={AdminNewPassScreen} />
       <Route path="/admin/lawsuits" component={LawsuitListScreen} />
       <Route path="/admin/profile" component={LawyerProfile} />
-      <Route path="/admin/profiles" component={ProfilesScreen} />
+      <Route path="/admin/benefits" component={BenefitsScreen} />
     </Switch>
   </BrowserRouter>,
   document.getElementById('root'),

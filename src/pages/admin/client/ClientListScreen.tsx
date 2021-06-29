@@ -2,7 +2,7 @@
 import React, { memo, useState, useMemo, useCallback, useEffect } from 'react'
 import { observer } from 'mobx-react-lite'
 import AdminLayout from '../../GlobalLayout'
-import { Client, NewClient, ResponseStatus, Profile } from '~/types'
+import { Client, NewClient, ResponseStatus } from '~/types'
 import {
   Table,
   Space,
@@ -46,7 +46,7 @@ import { cpf } from 'cpf-cnpj-validator'
 import { estados } from '~/utils/estados-cidades.json'
 
 const ClientListScreen = observer(() => {
-  const { adminStore, authStore, lawyerStore, clientStore, profileStore } = useStores()
+  const { adminStore, authStore, lawyerStore, clientStore, benefitStore } = useStores()
 
   const maritals = [
     'Solteiro (a)',
@@ -69,7 +69,6 @@ const ClientListScreen = observer(() => {
   const [editModalState, setEditModalState] = useState(false)
   const [selectedRowKeys, setSelectedRowKeys] = useState<string[]>([])
   const [clients, setClients] = useState<Client[]>([])
-  const [profiles, setProfiles] = useState<Profile[]>([])
   const [filterWord, setFilterWord] = useState<string>('')
   const [searchingCep, setSearchingCep] = useState(false)
   const [cities, setCities] = useState<string[]>([])
@@ -479,13 +478,11 @@ const ClientListScreen = observer(() => {
         // *** Descomentar para aplicar a limitação de visualização de todos os clientes apenas para admin ***
         // adminStore.loadClients(lawyerStore.currentLawyer._id, hasAdmin(authStore.loggedUser))
         await adminStore.loadClients(lawyerStore.currentLawyer._id, true)
-        await profileStore.loadAll()
         setClients(adminStore.clients)
-        setProfiles(profileStore.profiles)
       }
     }
     loadClients()
-  }, [adminStore, lawyerStore.currentLawyer, authStore.loggedUser, setClients, profileStore])
+  }, [adminStore, lawyerStore.currentLawyer, authStore.loggedUser, setClients, benefitStore])
 
   const onSearch = useCallback(() => {
     const filterTable = adminStore.clients.filter(function (client) {
@@ -902,15 +899,15 @@ const ClientListScreen = observer(() => {
                     />
                   </Form.Item>
                 </div>
-                <Form.Item name="profile" key="profile" label="Perfil:">
+                {/* <Form.Item name="profile" key="profile" label="Perfil:">
                   <Select className="custom-select" placeholder="Selecione o perfil">
-                    {profiles.map((profile) => (
+                    {benefits.map((profile) => (
                       <Select.Option value={profile._id} key={profile.title}>
                         {profile.title}
                       </Select.Option>
                     ))}
                   </Select>
-                </Form.Item>
+                </Form.Item> */}
                 <Form.Item
                   name="clientCPF"
                   key="clientCPF"

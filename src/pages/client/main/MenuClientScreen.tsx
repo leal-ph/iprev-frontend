@@ -1,6 +1,5 @@
 import React, { memo } from 'react'
 import ClientLayout from '~/pages/GlobalLayout'
-import { useStores } from '~/hooks/use-stores'
 import MenuCard from '../../MenuCard'
 
 import Calendario from '~/assets/img/calendarioiprev@2x.png'
@@ -50,7 +49,7 @@ const MenuClientScreen = () => {
             <MenuCard
               image={Benefícios}
               label={'Consultar Benefícios'}
-              onClick={() => history.push('/client/documents/sign')}
+              onClick={() => history.push('/client/benefit')}
             />
             <MenuCard
               image={Judicial}

@@ -1,57 +1,57 @@
 import { observable, action } from 'mobx'
-import { Profile, ResponseStatus } from '~/types'
-import * as profileApi from '~/services/api/profile'
+import { Benefit, ResponseStatus } from '~/types'
+import * as benefitApi from '~/services/api/benefit'
 
-class ProfileStore {
-  @observable profiles: Profile[] = []
-  @observable loadingProfiles = false
+class BenefitStore {
+  @observable benefits: Benefit[] = []
+  @observable loadingBenefits = false
 
-  @observable userProfile: Profile | undefined = undefined
-  @observable loadingUserProfile = false
+  @observable userBenefit: Benefit | undefined = undefined
+  @observable loadingUserBenefit = false
 
   @observable actionLoading = false
 
   @action.bound
   async loadAll() {
-    this.loadingProfiles = true
+    this.loadingBenefits = true
     try {
-      const response = await profileApi.loadAll()
+      const response = await benefitApi.loadAll()
       if (response.data && response.status === 200) {
-        this.profiles = response.data
-        this.loadingProfiles = false
+        this.benefits = response.data
+        this.loadingBenefits = false
         return ResponseStatus.SUCCESS
       }
-      this.loadingProfiles = false
+      this.loadingBenefits = false
       return ResponseStatus.INTERNAL_ERROR
     } catch (error) {
-      this.loadingProfiles = true
+      this.loadingBenefits = true
       return ResponseStatus.INTERNAL_ERROR
     }
   }
 
   @action.bound
   async loadById(profileId: string) {
-    this.loadingUserProfile = true
+    this.loadingUserBenefit = true
     try {
-      const response = await profileApi.loadById(profileId)
+      const response = await benefitApi.loadById(profileId)
       if (response.data && response.status === 200) {
-        this.userProfile = response.data.pop()
-        this.loadingUserProfile = false
+        this.userBenefit = response.data.pop()
+        this.loadingUserBenefit = false
         return ResponseStatus.SUCCESS
       }
-      this.loadingUserProfile = false
+      this.loadingUserBenefit = false
       return ResponseStatus.INTERNAL_ERROR
     } catch (error) {
-      this.loadingUserProfile = false
+      this.loadingUserBenefit = false
       return ResponseStatus.INTERNAL_ERROR
     }
   }
 
   @action.bound
-  async save(profile: Partial<Profile>) {
+  async save(profile: Partial<Benefit>) {
     this.actionLoading = true
     try {
-      const response = await profileApi.createProfile(profile)
+      const response = await benefitApi.createBenefit(profile)
       if (response.status === 200) {
         this.actionLoading = false
         return ResponseStatus.SUCCESS
@@ -66,10 +66,10 @@ class ProfileStore {
   }
 
   @action.bound
-  async update(_id: string, profile: Partial<Profile>) {
+  async update(_id: string, profile: Partial<Benefit>) {
     this.actionLoading = true
     try {
-      const response = await profileApi.updateProfile(_id, profile)
+      const response = await benefitApi.updateBenefit(_id, profile)
       if (response.status === 200) {
         this.loadAll()
         this.actionLoading = false
@@ -88,7 +88,7 @@ class ProfileStore {
   async delete(_id: string) {
     this.actionLoading = true
     try {
-      const response = await profileApi.deleteProfile(_id)
+      const response = await benefitApi.deleteBenefit(_id)
       if (response.status === 200) {
         this.actionLoading = false
         this.loadAll()
@@ -104,4 +104,4 @@ class ProfileStore {
   }
 }
 
-export default ProfileStore
+export default BenefitStore

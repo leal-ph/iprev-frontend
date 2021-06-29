@@ -37,7 +37,7 @@ import {
 } from './pages/Routes'
 import ClientProfile from './pages/client/ClientProfile'
 import LawyerProfile from './pages/admin/LawyerProfile'
-import ProfilesScreen from './pages/admin/client/ProfilesScreen'
+import ProfilesScreen from './pages/admin/client/BenefitsScreen'
 
 ReactDOM.render(
   <BrowserRouter>
@@ -67,7 +67,7 @@ ReactDOM.render(
       <AdminRoute path="/admin/recover" component={AdminNewPassScreen} />
       <AdminRoute path="/admin/lawsuits" component={LawsuitListScreen} />
       <AdminRoute path="/admin/profile" component={LawyerProfile} />
-      <AdminRoute path="/admin/profiles" component={ProfilesScreen} />
+      <AdminRoute path="/admin/benefits" component={ProfilesScreen} />
     </Switch>
   </BrowserRouter>,
   document.getElementById('root'),

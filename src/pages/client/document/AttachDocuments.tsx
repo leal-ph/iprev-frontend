@@ -48,7 +48,7 @@ function getIconFromType(extension: string) {
 }
 
 const AttachDocuments = observer(() => {
-  const { documentStore, authStore, profileStore, clientStore, sharepointStore } = useStores()
+  const { documentStore, authStore, clientStore, sharepointStore } = useStores()
 
   const history = useHistory()
 
@@ -285,7 +285,7 @@ const AttachDocuments = observer(() => {
     if (clientStore.currentUser) {
       documentStore.loadDocuments(clientStore.currentUser._id)
     }
-  }, [clientStore.currentUser, documentStore, profileStore])
+  }, [clientStore.currentUser, documentStore])
 
   useEffect(() => {
     if (clientStore.currentUser) {
@@ -366,7 +366,6 @@ const AttachDocuments = observer(() => {
                 style={{ width: '100%', marginBottom: '20px' }}
                 placeholder="Tipo do documento"
                 onChange={(value) => setSelectedType(value.toString())}
-                loading={profileStore.loadingUserProfile}
               >
                 {clientStore.currentUser &&
                   clientStore.currentUser.profile.neededDocuments.map((type) => (

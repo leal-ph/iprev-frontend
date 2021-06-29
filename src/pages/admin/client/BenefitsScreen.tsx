@@ -1,8 +1,8 @@
 /* eslint-disable react/display-name */
 import React, { memo, useState, useMemo, useCallback, useEffect } from 'react'
 import AdminLayout from '../../GlobalLayout'
-import { Profile } from '~/types'
-import { Table, Layout, Card, Button, Form, Input, message, Select, Popconfirm } from 'antd'
+import { Benefit } from '~/types'
+import { Table, Layout, Card, Button, Form, Input, message, Popconfirm } from 'antd'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { ColumnType } from 'antd/lib/table'
@@ -20,18 +20,13 @@ import {
   MSG_PROFILE_UPDATED_ERROR,
 } from '~/utils/messages'
 import { observer } from 'mobx-react-lite'
-import NumberFormat from 'react-number-format'
 import { useMediaQuery } from 'react-responsive'
 import { titleStyle } from '../../styles'
 
 const { Content } = Layout
 
-const convertNumber = (value: string) => {
-  return parseFloat(value.toString().replace('R$', '').replace('.', '').replace(',', '.'))
-}
-
-const ProfilesScreen = observer(() => {
-  const { profileStore } = useStores()
+const BenefitsScreen = observer(() => {
+  const { benefitStore } = useStores()
 
   const history = useHistory()
 
@@ -45,15 +40,14 @@ const ProfilesScreen = observer(() => {
     form
       .validateFields()
       .then(async () => {
-        const { text, title, documents, price } = form.getFieldsValue()
+        const { companyName, companyCategory, description } = form.getFieldsValue()
 
-        const selectedProfile = selectedRowKeys[selectedRowKeys.length - 1]
-        if (selectedProfile) {
-          const response = await profileStore.update(selectedProfile, {
-            text,
-            title,
-            neededDocuments: documents.map((d: string) => d.toUpperCase().slice(0, 50)),
-            initialPriceCents: convertNumber(price) * 100,
+        const selectedBenefit = selectedRowKeys[selectedRowKeys.length - 1]
+        if (selectedBenefit) {
+          const response = await benefitStore.update(selectedBenefit, {
+            companyName,
+            companyCategory,
+            description,
           })
 
           if (response === ResponseStatus.SUCCESS) {
@@ -63,16 +57,15 @@ const ProfilesScreen = observer(() => {
 
           message.error(MSG_PROFILE_UPDATED_ERROR)
         } else {
-          const response = await profileStore.save({
-            text,
-            title,
-            neededDocuments: documents,
-            initialPriceCents: convertNumber(price) * 100,
+          const response = await benefitStore.save({
+            companyName,
+            companyCategory,
+            description,
           })
 
           if (response === ResponseStatus.SUCCESS) {
             message.success(MSG_PROFILE_CREATED)
-            profileStore.loadAll()
+            benefitStore.loadAll()
             return
           }
 
@@ -82,19 +75,19 @@ const ProfilesScreen = observer(() => {
       .catch((error) => {
         console.error(error)
       })
-  }, [form, profileStore, selectedRowKeys])
+  }, [form, benefitStore, selectedRowKeys])
 
   const deleteHandler = useCallback(
     async (id: string) => {
-      const response = await profileStore.delete(id)
+      const response = await benefitStore.delete(id)
       if (response === ResponseStatus.SUCCESS) {
         message.success(MSG_PROFILE_DELETD)
-        profileStore.loadAll()
+        benefitStore.loadAll()
         return
       }
       message.error(MSG_PROFILE_DELETD_ERROR)
     },
-    [profileStore],
+    [benefitStore],
   )
 
   const onSelectChange = useCallback(
@@ -120,20 +113,28 @@ const ProfilesScreen = observer(() => {
   }
 
   const columns = useMemo(() => {
-    const data: ColumnType<Profile>[] = []
+    const data: ColumnType<Benefit>[] = []
 
     data.push({
       title: () => <span className="custom-tab-title">Benefício</span>,
       key: 'title',
-      render: (value: Profile) => {
-        return <div>{value.title}</div>
+      render: (value: Benefit) => {
+        return <div>{value.companyName}</div>
+      },
+    })
+
+    data.push({
+      title: () => <span className="custom-tab-title">Categoria</span>,
+      key: 'companyCategory',
+      render: (value: Benefit) => {
+        return <div>{value.companyCategory}</div>
       },
     })
 
     !isPortrait &&
       data.push({
         key: 'actions',
-        render: (value: Profile) => (
+        render: (value: Benefit) => (
           <Popconfirm
             title="Deseja remover este perfil?"
             onConfirm={() => deleteHandler(value._id)}
@@ -149,32 +150,30 @@ const ProfilesScreen = observer(() => {
   const setDefaults = useCallback(() => {
     const selectedKey = selectedRowKeys[selectedRowKeys.length - 1]
     if (selectedKey) {
-      const selectedProfile = profileStore.profiles.find((p) => p._id === selectedKey)
-      if (selectedProfile) {
+      const selectedBenefit = benefitStore.benefits.find((p) => p._id === selectedKey)
+      if (selectedBenefit) {
         form.setFieldsValue({
-          title: selectedProfile.title,
-          text: selectedProfile.text,
-          documents: selectedProfile.neededDocuments,
-          price: selectedProfile.initialPriceCents / 100,
+          companyName: selectedBenefit.companyName,
+          companyCategory: selectedBenefit.companyCategory,
+          description: selectedBenefit.description,
         })
       }
     } else {
       form.setFieldsValue({
-        title: undefined,
-        text: undefined,
-        documents: [],
-        price: undefined,
+        companyName: undefined,
+        companyCategory: undefined,
+        description: undefined,
       })
     }
-  }, [form, selectedRowKeys, profileStore.profiles])
+  }, [form, selectedRowKeys, benefitStore.benefits])
 
   useEffect(() => {
     setDefaults()
   }, [setDefaults])
 
   useEffect(() => {
-    profileStore.loadAll()
-  }, [profileStore])
+    benefitStore.loadAll()
+  }, [benefitStore])
 
   return (
     <AdminLayout
@@ -197,8 +196,8 @@ const ProfilesScreen = observer(() => {
               pagination={{ style: { marginRight: '10px' } }}
               columns={columns}
               rowKey="_id"
-              dataSource={profileStore.profiles}
-              loading={profileStore.loadingProfiles}
+              dataSource={benefitStore.benefits}
+              loading={benefitStore.loadingBenefits}
               rowSelection={rowSelection}
               style={{
                 width: isPortrait ? '95vw' : '50vw',
@@ -222,54 +221,34 @@ const ProfilesScreen = observer(() => {
             >
               <Form form={form} layout="vertical">
                 <Form.Item
-                  name="title"
-                  key="title"
-                  label="Título:"
-                  rules={[{ required: true, message: 'Título obrigatório!' }]}
+                  name="companyName"
+                  key="companyName"
+                  label="Nome:"
+                  rules={[{ required: true, message: 'Nome obrigatório!' }]}
                 >
                   <Input allowClear className="custom-input" />
                 </Form.Item>
                 <Form.Item
-                  name="text"
-                  key="text"
-                  label="Texto:"
-                  rules={[{ required: true, message: 'Texto obrigatório!' }]}
+                  name="companyCategory"
+                  key="companyCategory"
+                  label="Categoria:"
+                  rules={[{ required: true, message: 'Categoria obrigatória!' }]}
+                >
+                  <Input allowClear className="custom-input" />
+                </Form.Item>
+                <Form.Item
+                  name="description"
+                  key="description"
+                  label="Descrição:"
+                  rules={[{ required: true, message: 'Descrição obrigatória!' }]}
                 >
                   <Input.TextArea allowClear className="custom-input" />
-                </Form.Item>
-                <Form.Item
-                  name="price"
-                  key="price"
-                  label="Cobrança inicial:"
-                  rules={[{ required: true, message: 'Valor obrigatório!' }]}
-                  style={{ width: '100%', marginRight: isPortrait ? 0 : '10px' }}
-                >
-                  <NumberFormat
-                    className="ant-input custom-input"
-                    thousandSeparator={'.'}
-                    decimalSeparator={','}
-                    prefix={'R$ '}
-                    placeholder={'R$ 0,00'}
-                  />
-                </Form.Item>
-                <Form.Item
-                  name="documents"
-                  key="documents"
-                  label="Documentos Necessários (Limite de 50 caracteres por documento):"
-                  rules={[{ required: true, message: 'Documentos são obrigatórios!' }]}
-                >
-                  <Select
-                    mode="tags"
-                    className="custom-input"
-                    maxTagTextLength={50}
-                    style={{ width: '100%' }}
-                  />
                 </Form.Item>
               </Form>
               <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                 <Button
                   type="primary"
-                  loading={profileStore.actionLoading}
+                  loading={benefitStore.actionLoading}
                   onClick={createHandle}
                   style={{ width: isPortrait ? '30vw' : '15vw' }}
                 >
@@ -284,4 +263,4 @@ const ProfilesScreen = observer(() => {
   )
 })
 
-export default memo(ProfilesScreen)
+export default memo(BenefitsScreen)

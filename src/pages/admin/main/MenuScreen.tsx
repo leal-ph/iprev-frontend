@@ -59,7 +59,7 @@ const MenuScreen = () => {
           <MenuCard
             image={Perfil}
             label={'Cadastrar Benefícios'}
-            onClick={() => history.push('/admin/profiles')}
+            onClick={() => history.push('/admin/benefits')}
           />
           <MenuCard
             image={Cadastro}
