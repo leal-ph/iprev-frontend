@@ -78,7 +78,7 @@ const BasicForm = observer(() => {
   return (
     <PresentationLayout>
       <div
-        title="TODA A AJUDA LEGAL QUE VOCÊ PRECISAR"
+        title="Associação IPREV"
         style={{
           display: 'flex',
           flexDirection: 'column',
@@ -87,11 +87,9 @@ const BasicForm = observer(() => {
         }}
       >
         <span className="subtitle" style={{ fontSize: '28px' }}>
-          TODA A AJUDA LEGAL QUE VOCÊ PRECISAR
+          Associação IPREV
         </span>
-        <span style={{ textAlign: 'center' }}>
-          Preencha com as informações para melhor te auxiliar sobre os benefícios previdenciários
-        </span>
+        <span style={{ textAlign: 'center' }}>Seja um beneficiário e associe-se ao IPREV.</span>
       </div>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <Card

@@ -1,5 +1,5 @@
 import React, { memo, useCallback, useEffect, useState } from 'react'
-import { BOCAYUVA_BLUE_COLOR, MATERIAL_ICON_COLOR } from '~/consts/consts'
+import { BOCAYUVA_BLUE_COLOR, BOCAYUVA_GREEN_COLOR } from '~/consts/consts'
 import { Layout, Tooltip } from 'antd'
 import Logo from '~/assets/img/logo-iprev.svg'
 
@@ -8,7 +8,7 @@ import { useStores } from '~/hooks/use-stores'
 import { useHistory } from 'react-router-dom'
 import { ResponseStatus, LayoutType } from '~/types'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSignOutAlt, faUser, faComment } from '@fortawesome/free-solid-svg-icons'
+import { faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons'
 
 const { Header } = Layout
 
@@ -31,16 +31,8 @@ const GlobalHeader = observer(({ loginPrefix }: Props) => {
     }
   }, [authStore.loggedUser, history, loginPrefix])
 
-  const chatHandler = useCallback(() => {
-    window.open(`http://localhost:4000`, '_blank')
-  }, [])
-
   const lougoutHandler = useCallback(async () => {
     if (authStore.loggedUser) {
-      if (window.$chatwoot) {
-        window.$chatwoot.reset()
-        window.location.reload()
-      }
       const response = authStore.logout()
       if (response === ResponseStatus.SUCCESS) {
         history.push(`/${loginPrefix}/login`)
@@ -89,7 +81,7 @@ const GlobalHeader = observer(({ loginPrefix }: Props) => {
             <FontAwesomeIcon
               icon={faSignOutAlt}
               size="2x"
-              color={MATERIAL_ICON_COLOR}
+              color={BOCAYUVA_BLUE_COLOR}
               style={{ cursor: 'pointer' }}
               onClick={lougoutHandler}
             />
@@ -112,26 +104,17 @@ const GlobalHeader = observer(({ loginPrefix }: Props) => {
               <Tooltip title={name}>
                 <FontAwesomeIcon
                   icon={faUser}
-                  color={authStore.loggedUser ? MATERIAL_ICON_COLOR : BOCAYUVA_BLUE_COLOR}
+                  color={authStore.loggedUser ? BOCAYUVA_BLUE_COLOR : BOCAYUVA_GREEN_COLOR}
                   size="2x"
                   style={{ cursor: 'pointer' }}
                   onClick={loginHandler}
-                />
-              </Tooltip>
-              <Tooltip title={'Chat'}>
-                <FontAwesomeIcon
-                  icon={faComment}
-                  color={authStore.loggedUser ? MATERIAL_ICON_COLOR : BOCAYUVA_BLUE_COLOR}
-                  size="2x"
-                  style={{ cursor: 'pointer', marginLeft: '10px' }}
-                  onClick={chatHandler}
                 />
               </Tooltip>
             </div>
           ) : (
             <FontAwesomeIcon
               icon={faUser}
-              color={authStore.loggedUser ? MATERIAL_ICON_COLOR : BOCAYUVA_BLUE_COLOR}
+              color={authStore.loggedUser ? BOCAYUVA_BLUE_COLOR : BOCAYUVA_GREEN_COLOR}
               size="2x"
               style={{ cursor: 'pointer' }}
               onClick={loginHandler}

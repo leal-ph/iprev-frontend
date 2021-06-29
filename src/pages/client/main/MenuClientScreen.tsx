@@ -1,23 +1,15 @@
-import React, { memo, useEffect } from 'react'
+import React, { memo } from 'react'
 import ClientLayout from '~/pages/GlobalLayout'
 import { useStores } from '~/hooks/use-stores'
 import MenuCard from '../../MenuCard'
 
-import Calendario from '~/assets/img/reunioes_bca_2.jpg'
-import Documentos from '~/assets/img/documento@2x.png'
-import Assinado from '~/assets/img/assinados_bca_2.jpg'
-import Processo from '~/assets/img/processo_bca_2.jpg'
-import Pagamento from '~/assets/img/pagamento@2x.png'
+import Calendario from '~/assets/img/calendarioiprev@2x.png'
+import Judicial from '~/assets/img/judicial@2x.png'
+import Benefícios from '~/assets/img/beneficios@2x.jpg'
+import Pagamento from '~/assets/img/pagamentoiprev@2x.png'
 import { useHistory } from 'react-router-dom'
 import { useMediaQuery } from 'react-responsive'
-
-declare global {
-  interface Window {
-    chatwootSettings: any
-    chatwootSDK: any
-    $chatwoot: any
-  }
-}
+import { Alert } from 'antd'
 
 const MenuClientScreen = () => {
   // TODO: Adicionar Ações para Mover em Direção as outras telas.
@@ -26,81 +18,65 @@ const MenuClientScreen = () => {
   const history = useHistory()
 
   const isPortrait = useMediaQuery({ query: '(orientation: portrait)' })
-  const { authStore } = useStores()
-
-  useEffect(() => {
-    window.chatwootSettings = {
-      hideMessageBubble: false,
-      position: 'right',
-      locale: 'pt-br',
-      type: 'expanded_bubble',
-      launcherTitle: 'Fale Conosco!',
-    }
-
-    const BASE_URL = 'http://localhost:4000'
-    const script = document.createElement('script')
-    script.src = BASE_URL + '/packs/js/sdk.js'
-    script.async = !0
-    document.body.appendChild(script)
-
-    script.onload = function () {
-      window.chatwootSDK.run({
-        websiteToken: 'dPEKMYrXJ5gHZ3t1X7DgAMWo',
-        baseUrl: BASE_URL,
-      })
-      setTimeout(function () {
-        window.$chatwoot.setUser(authStore.loggedUser?.email, {
-          email: authStore.loggedUser?.email,
-          name: authStore.loggedUser?.name,
-        })
-      }, 5000)
-    }
-
-    return () => {
-      document.body.removeChild(script)
-    }
-  }, [authStore.loggedUser])
 
   return (
     <ClientLayout
-      title="ÁREA DO CLIENTE"
+      title="Área do Cliente"
       subtitle="Selecione uma opção para prosseguir"
       content={
         <div
           style={{
             display: 'flex',
-            flexDirection: isPortrait ? 'column' : 'row',
-            alignItems: isPortrait ? 'center' : 'flex-start',
+            flexDirection: 'column',
+            alignItems: 'center',
             justifyContent: 'center',
-            paddingTop: isPortrait ? '25vh' : '18vh',
-            marginTop: isPortrait ? '-70px' : 0,
           }}
         >
-          <MenuCard
-            image={Calendario}
-            label={'AGENDAR REUNIÕES'}
-            onClick={() => history.push('/client/calendar')}
-          />
-          <MenuCard
-            image={Documentos}
-            label={'ANEXAR DOCUMENTOS'}
-            onClick={() => history.push('/client/documents')}
-          />
-          <MenuCard
-            image={Assinado}
-            label={'ASSINAR DOCUMENTOS'}
-            onClick={() => history.push('/client/documents/sign')}
-          />
-          <MenuCard
-            image={Processo}
-            label={'ANDAMENTO DE PROCESSOS'}
-            onClick={() => history.push('/client/lawsuits')}
-          />
-          <MenuCard
-            image={Pagamento}
-            label={'ÁREA DE PAGAMENTO'}
-            onClick={() => history.push('/client/payment')}
-          />
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: isPortrait ? 'column' : 'row',
+              alignItems: isPortrait ? 'center' : 'flex-start',
+              justifyContent: 'center',
+              paddingTop: isPortrait ? '25vh' : '18vh',
+              marginTop: isPortrait ? '-70px' : 0,
+            }}
+          >
+            <MenuCard
+              image={Calendario}
+              label={'Agendar reunião'}
+              onClick={() => history.push('/client/calendar')}
+            />
+            <MenuCard
+              image={Benefícios}
+              label={'Consultar Benefícios'}
+              onClick={() => history.push('/client/documents/sign')}
+            />
+            <MenuCard
+              image={Judicial}
+              label={'Processo Jurídico'}
+              onClick={() => history.push('/client/lawsuits')}
+            />
+            <MenuCard
+              image={Pagamento}
+              label={'Pagamento'}
+              onClick={() => history.push('/client/payment')}
+            />
+          </div>
+          <div
+            style={{
+              marginTop: '30px',
+              width: '50vw',
+              textAlign: 'center',
+            }}
+          >
+            <Alert
+              message="AVISO!"
+              description="Você ainda não é um associado, para finalizar realize o pagamento da taxa de associação mensal."
+              type="warning"
+              showIcon
+            />
+          </div>
         </div>
       }
     />
