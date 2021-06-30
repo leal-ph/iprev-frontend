@@ -204,6 +204,29 @@ class ClientStore {
   }
 
   @action.bound
+  async updateBenefitStatus(
+    benefitId: string,
+    clientId: string,
+    newStatus: string,
+    date: Date,
+  ): Promise<ResponseStatus> {
+    this.saveLoading = true
+
+    const response = await clientApi.updateBenefitStatus(benefitId, clientId, newStatus, date)
+    try {
+      if (response.status === 200) {
+        this.saveLoading = false
+        return ResponseStatus.SUCCESS
+      } else {
+        this.saveLoading = false
+        return ResponseStatus.INTERNAL_ERROR
+      }
+    } catch {
+      return ResponseStatus.INTERNAL_ERROR
+    }
+  }
+
+  @action.bound
   async excludeBenefits(benefitId: string, clientId: string): Promise<ResponseStatus> {
     this.saveLoading = true
 

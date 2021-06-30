@@ -72,6 +72,55 @@ const LifeContribForm = observer(() => {
     }
   }
 
+  const renderFormSeven = useCallback(
+    (saveInfos: boolean) => {
+      if (saveInfos) {
+        // TODO: Salvar dados no Banco.
+      }
+      setActiveForm(
+        <div>
+          <h3 style={{ marginBottom: '10px' }}>Número do processo RPV:</h3>
+          <Input
+            className="custom-input"
+            name="rpv"
+            key="rpv"
+            maxLength={200}
+            onChange={(e) => {
+              update(['Número do processo RPV:', e.target.value], 6)
+            }}
+          />
+          <h3 style={{ marginBottom: '10px' }}>Número do precatório:</h3>
+          <Input
+            className="custom-input"
+            name="precatorio"
+            key="precatorio"
+            maxLength={200}
+            onChange={(e) => {
+              update(['Número do precatório:', e.target.value], 7)
+            }}
+          />
+          <div style={{ marginTop: '5vh', display: 'flex', justifyContent: 'space-between' }}>
+            <Button
+              style={{ width: '50%', marginRight: '1vh' }}
+              onClick={() => renderFormSix(false)}
+            >
+              VOLTAR
+            </Button>
+            <Button
+              style={{ width: '50%', marginLeft: '1vh' }}
+              type="primary"
+              onClick={() => saveHandler()}
+            >
+              CONTINUAR
+            </Button>
+          </div>
+        </div>,
+      )
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [saveHandler, update],
+  )
+
   const renderFormSix = useCallback(
     (saveInfos: boolean) => {
       if (saveInfos) {
@@ -99,7 +148,7 @@ const LifeContribForm = observer(() => {
             <Button
               style={{ width: '50%', marginLeft: '1vh' }}
               type="primary"
-              onClick={() => saveHandler()}
+              onClick={() => renderFormSeven(false)}
             >
               CONTINUAR
             </Button>
@@ -110,52 +159,6 @@ const LifeContribForm = observer(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [saveHandler, update],
   )
-
-  /* const renderFormSix = useCallback(
-    (saveInfos: boolean) => {
-      if (saveInfos) {
-        // TODO: Salvar dados no Banco.
-      }
-      setActiveForm(
-        <div>
-          <h3>Você precisa de um advogado para te ajudar?</h3>
-          <Radio.Group
-            style={{ display: 'flex', flexDirection: 'column' }}
-            onChange={(e) => {
-              update(['Você precisa de um advogado para te ajudar?', e.target.value], 5)
-            }}
-          >
-            {formSix.map((entry) => (
-              <Radio value={entry} key={entry}>
-                {isPortrait ? (
-                  <span>{entry.length > 40 ? `${entry.substring(0, 40)}...` : entry}</span>
-                ) : (
-                  entry
-                )}
-              </Radio>
-            ))}
-          </Radio.Group>
-          <div style={{ marginTop: '5vh', display: 'flex', justifyContent: 'space-between' }}>
-            <Button
-              style={{ width: '50%', marginRight: '1vh' }}
-              onClick={() => renderFormFive(false)}
-            >
-              VOLTAR
-            </Button>
-            <Button
-              style={{ width: '50%', marginLeft: '1vh' }}
-              type="primary"
-              onClick={() => renderFormSeven(true)}
-            >
-              CONTINUAR
-            </Button>
-          </div>
-        </div>,
-      )
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [isPortrait, update],
-  ) */
 
   const renderFormFive = useCallback(
     (saveInfos: boolean) => {
@@ -399,7 +402,7 @@ const LifeContribForm = observer(() => {
               textAlign: 'center',
             }}
           >
-            <span className="title">FORMULÁRIO DA VIDA CONTRIBUTIVA</span>
+            <span className="title">Formulário de vida contributiva</span>
             <span className="subtitle">
               Responda as perguntas abaixo para finalizar a análise de perfil
             </span>

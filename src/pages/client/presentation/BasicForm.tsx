@@ -60,7 +60,7 @@ const BasicForm = observer(() => {
             rg_placeholder,
           )
           if (response === ResponseStatus.SUCCESS) {
-            history.push('/client/benefits')
+            history.push('/client/form')
           } else if (response === ResponseStatus.DUPLICATE_REGISTER) {
             message.error('E-mail já cadastrado!')
           } else if (response === ResponseStatus.DUPLICATE_REGISTER_EXISTS_AS_LAWYER) {

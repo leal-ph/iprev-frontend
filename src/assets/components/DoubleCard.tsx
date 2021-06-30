@@ -2,6 +2,7 @@ import { CardProps } from 'antd/lib/card'
 import React, { memo, ReactNode } from 'react'
 import { useMediaQuery } from 'react-responsive'
 import CustomCard from './CustomCard'
+import { titleStyle } from '~/pages/styles'
 
 interface CustomProps {
   children: ReactNode
@@ -36,7 +37,7 @@ const DoubleCard = ({ cardOne, cardTwo }: Props) => {
           height: isPortrait ? '50vh' : '75vh',
           overflowY: 'auto',
         }}
-        title={cardOne.title}
+        title={<span style={titleStyle('20px')}>{cardOne.title}</span>}
         {...cardOne.props}
       >
         {cardOne.children}
@@ -50,7 +51,7 @@ const DoubleCard = ({ cardOne, cardTwo }: Props) => {
           height: isPortrait ? '50vh' : '75vh',
           overflowY: 'auto',
         }}
-        title={cardTwo.title}
+        title={<span style={titleStyle('20px')}>{cardTwo.title}</span>}
         {...cardTwo.props}
       >
         {cardTwo.children}

@@ -3,7 +3,7 @@ import React, { memo, useCallback } from 'react'
 import { Card, Form, Input, Button, message } from 'antd'
 import { useForm } from 'antd/es/form/Form'
 
-import Advogados from '~/assets/img/advogados@2x.png'
+import Advogados from '~/assets/img/login@2x.png'
 import AdminLayout from '../GlobalLayout'
 import { rowDisplayCenter } from '~/utils/display'
 import { useHistory } from 'react-router-dom'
@@ -80,7 +80,7 @@ const AdminNewPassScreen = () => {
           onBack={() => history.push('/admin')}
           content={
             <div style={{ ...rowDisplayCenter }}>
-              <Card className="custom-card" style={{ width: '30vw' }} title="ÁREA DO ADVOGADO">
+              <Card className="custom-card" style={{ width: '30vw' }}>
                 <Form name="admin-login-form" form={form} layout="vertical">
                   <Form.Item
                     key="oldpassword"

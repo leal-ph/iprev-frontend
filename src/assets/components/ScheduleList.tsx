@@ -2,6 +2,7 @@ import { faCalendarAlt, faEdit, faTrash } from '@fortawesome/free-solid-svg-icon
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { List, Tag, Popconfirm } from 'antd'
 import React, { memo, useCallback } from 'react'
+import moment from 'moment'
 
 interface ScheduleItem {
   id: string
@@ -22,8 +23,12 @@ const ScheduleList = ({ itens, onExclude, onEdit }: Props) => {
   const getStatusTag = useCallback((status: string) => {
     if (status === 'Marcado') {
       return <Tag color="green">Marcado</Tag>
-    } else {
+    } else if (status === 'Aguardando Marcação') {
       return <Tag color="gold">Aguardando Marcação</Tag>
+    } else if (status === 'Recusado') {
+      return <Tag color="red">Recusado</Tag>
+    } else {
+      return <Tag color="blue">Indefinido</Tag>
     }
   }, [])
 
@@ -55,6 +60,13 @@ const ScheduleList = ({ itens, onExclude, onEdit }: Props) => {
               <div style={{ display: 'flex', flexDirection: 'column', marginLeft: '5px' }}>
                 <span>{i.name}</span>
                 <span>Status: {getStatusTag(i.status)}</span>
+
+                <span>
+                  Data:{' '}
+                  {i.status === 'Marcado'
+                    ? moment(Date.parse(i.dateTime)).format('LLL').toString()
+                    : '-'}
+                </span>
               </div>
             </div>
             {(i.canEdit || i.canExclude) && (

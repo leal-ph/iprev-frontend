@@ -4,11 +4,11 @@ import { Layout, Card, Checkbox, Button, message, Modal } from 'antd'
 import { useStores } from '~/hooks/use-stores'
 import { useHistory } from 'react-router-dom'
 import { observer } from 'mobx-react-lite'
-import { PaymentStatus, PDFInfo } from '~/types'
+import { PaymentStatus } from '~/types'
 import { MSG_HONORARIOS_ERROR } from '~/utils/messages'
 import { useMediaQuery } from 'react-responsive'
 import { contractConsultoria } from './ContractsPages'
-import * as documentApi from '~/services/api/document'
+// import * as documentApi from '~/services/api/document'
 
 import { policy, use_terms } from '~/pages/client/presentation/terms'
 
@@ -17,7 +17,7 @@ import ReactHtmlParser from 'react-html-parser'
 const { Content } = Layout
 
 const AceiteScreen = observer(() => {
-  const { authStore, clientStore, paymentStore, documentStore } = useStores()
+  const { authStore, clientStore, paymentStore } = useStores()
 
   const [confirmAccept, setConfirmAccept] = useState(false)
   const [loadingAccept, setLoadingAccept] = useState(false)
@@ -46,10 +46,8 @@ const AceiteScreen = observer(() => {
 
     setLoadingAccept(true)
 
-    let info: PDFInfo
-
-    if (clientStore.currentUser) {
-      info = {
+    /* if (clientStore.currentUser) {
+      const info: PDFInfo = {
         name: clientStore.currentUser?.name,
         marital_status: clientStore.currentUser?.marital_status,
         cpf: clientStore.currentUser?.cpf,
@@ -67,7 +65,7 @@ const AceiteScreen = observer(() => {
       } catch (err) {
         message.error(err)
       }
-    }
+    } */
 
     if (clientStore.currentUser) {
       const payment = {
@@ -76,7 +74,7 @@ const AceiteScreen = observer(() => {
         item: {
           description: 'HONORÁRIOS',
           quantity: 1,
-          price_cents: 5000,
+          price_cents: process.env.INITIAL_PRICE ? parseInt(process.env.INITIAL_PRICE) : 5000,
         },
         type: undefined,
         expiry_date: new Date(date.setTime(date.getTime() + 14 * 86400000)),
@@ -85,7 +83,7 @@ const AceiteScreen = observer(() => {
 
       if (await paymentStore.generatePlaceHolder(clientStore.currentUser._id, payment)) {
         setLoadingAccept(false)
-        history.push('/client/payment')
+        history.push('/client/menu')
         return
       }
 
@@ -93,7 +91,7 @@ const AceiteScreen = observer(() => {
       history.push('/client/menu')
       message.error(MSG_HONORARIOS_ERROR)
     }
-  }, [clientStore.currentUser, paymentStore, date, history, confirmAccept, documentStore])
+  }, [clientStore.currentUser, paymentStore, date, history, confirmAccept])
 
   useEffect(() => {
     if (authStore.loggedUser && authStore.loggedUser._id) {
@@ -103,7 +101,7 @@ const AceiteScreen = observer(() => {
 
   return (
     <ClientLayout
-      title="ACEITE PAGAMENTO DE HONORÁRIOS"
+      title="Contrato de Aceite"
       content={
         <Content
           style={{
@@ -111,15 +109,13 @@ const AceiteScreen = observer(() => {
             flexDirection: 'row',
             alignItems: 'flex-start',
             justifyContent: 'center',
+            marginTop: '20px',
           }}
         >
           <Card
             className="custom-card"
             style={{ width: isPortrait ? '90vw' : '60vw', marginBottom: '10px' }}
           >
-            <h3 style={{ color: '#04093b', fontFamily: 'Bebas Neue', fontSize: '30px' }}>
-              ACEITE - PAGAMENTO DE HONORÁRIOS
-            </h3>
             <Card className="custom-card" style={{ marginBottom: '50px' }}>
               {contractConsultoria(
                 clientStore.currentUser?.name,

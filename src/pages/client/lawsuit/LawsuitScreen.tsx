@@ -112,7 +112,7 @@ const LawsuitScreen = observer(() => {
 
   return (
     <ClientLayout
-      title="ACOMPANHAR ANDAMENTOS"
+      title="Andamento processual"
       onBack={() => history.push('/client/menu')}
       content={
         <Content>
@@ -122,11 +122,12 @@ const LawsuitScreen = observer(() => {
               justifyContent: 'center',
               alignItems: 'center',
               flexDirection: isPortrait ? 'column' : 'row',
+              marginTop: '15px',
             }}
           >
             <Card
               className="custom-card"
-              title={<span style={titleStyle('25px')}>ANDAMENTO PROCESSUAL</span>}
+              title={<span style={titleStyle('25px')}>Andamento processual</span>}
               style={{
                 width: isPortrait ? '90vw' : '40vw',
                 height: '65vh',
@@ -152,8 +153,8 @@ const LawsuitScreen = observer(() => {
               title={
                 <span style={titleStyle('25px')}>
                   {selectedLawsuit?.proc_number
-                    ? `ANDAMENTO INTERNO - ${selectedLawsuit?.proc_number}`
-                    : `ANDAMENTO INTERNO`}
+                    ? `Andamento Interno - ${selectedLawsuit?.proc_number}`
+                    : `Andamento Interno`}
                 </span>
               }
               style={{

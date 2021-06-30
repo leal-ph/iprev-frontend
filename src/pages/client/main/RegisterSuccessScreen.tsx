@@ -3,8 +3,8 @@ import ClientLayout from '~/pages/GlobalLayout'
 // import { Layout } from 'antd'
 import MenuCard from '../../MenuCard'
 
-import Cliente from '~/assets/img/clientes@2x.png'
-import Processo from '~/assets/img/processo@2x.png'
+import Cliente from '~/assets/img/associados@2x.png'
+import Processo from '~/assets/img/judicial@2x.png'
 import { useHistory } from 'react-router-dom'
 import { useMediaQuery } from 'react-responsive'
 
@@ -17,7 +17,7 @@ const RegisterSuccessScreen = () => {
 
   return (
     <ClientLayout
-      title="CADASTRO FINALIZADO COM SUCESSO!"
+      title="Cadastro finalizado!"
       subtitle="Primeiro passo finalizado, agora escolha uma das opções abaixo para seguir."
       content={
         <div
@@ -27,20 +27,19 @@ const RegisterSuccessScreen = () => {
             alignItems: isPortrait ? 'center' : 'flex-start',
             justifyContent: 'center',
             paddingTop: isPortrait ? '25vh' : '18vh',
+            marginBottom: '20px',
           }}
         >
           <MenuCard
             image={Processo}
-            label={'REQUERIMENTO ADMINISTRATIVO / PROCESSO'}
+            label={'Andamento Processual'}
             text={'Inicie o andamento do processo sem a necessidade de uma consultoria jurídica.'}
-            onClick={() => history.push('/client/contract')}
+            onClick={() => window.open('https://app.bocayuvaadvogados.com.br/client', '_blank')}
           />
           <MenuCard
             image={Cliente}
-            label={'CONSULTORIA JURÍDICA'}
-            text={
-              'Opte por uma consultoria jurídica antes de dar seguimento na abertura do processo.'
-            }
+            label={'Portal do Associado'}
+            text={'Visite nosso portal do associado e consulte os benefícios disponíveis.'}
             onClick={() => history.push('/client/aceite')}
           />
         </div>

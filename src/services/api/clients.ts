@@ -78,6 +78,19 @@ export const updateBenefits = (benefitId: string, clientId: string): Promise<Res
   return post(`${endpoint}/users/${clientId}/updateUserReqBenefits`, { benefitId: benefitId })
 }
 
+export const updateBenefitStatus = (
+  benefitId: string,
+  clientId: string,
+  newStatus: string,
+  date?: Date,
+): Promise<Response<Client>> => {
+  return post(`${endpoint}/users/${clientId}/updateUserReqStatus`, {
+    benefitId: benefitId,
+    newStatus: newStatus,
+    date: date,
+  })
+}
+
 export const excludeBenefits = (benefitId: string, clientId: string): Promise<Response<Client>> => {
   return post(`${endpoint}/users/${clientId}/deleteUserReqBenefits`, { benefitId: benefitId })
 }

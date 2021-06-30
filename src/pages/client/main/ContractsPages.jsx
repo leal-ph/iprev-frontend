@@ -231,9 +231,6 @@ export function contractConsultoria(
         }}
       />
       <meta charSet="utf-8" />
-      <div style={{ textAlign: 'right', paddingRight: '10%', paddingTop: '5%' }}>
-        <img src="http://35.247.199.10/api/img/Logo.png" alt="BCA" width="15%" height="15%" />
-      </div>
       <div style={{ paddingRight: '10%', paddingLeft: '10%', paddingTop: '3%' }}>
         <h3>
           <center>CONTRATO DE PRESTAÇÃO DE SERVIÇOS ADVOCATÍCIOS</center>
@@ -340,25 +337,12 @@ export function contractConsultoria(
         <center>Brasília, {moment().format('LL')}.</center>
         <p />
       </div>
-      <div className="row">
-        <div className="column">
-          <center>
-            <p>_________________________________</p>
-            <p>Contratante</p>
-          </center>
-        </div>
-        <div className="column">
-          <center>
-            <p>__________________________________</p>
-            <p>Contratado</p>
-          </center>
-        </div>
-      </div>
+
       <div style={{ textAlign: 'center' }}>
         <p style={{ color: 'goldenrod', marginTop: '0 px' }}>
           _______________________________________
         </p>
-        <p style={{ paddingBottom: '50px' }}>
+        {/* <p style={{ paddingBottom: '50px' }}>
           <span>
             SRTVS Quadra 701 – bloco O – salas 430/433 – Multiempresarial – Brasília/DF – 70340-000
           </span>
@@ -372,7 +356,7 @@ export function contractConsultoria(
             <br />
             <br />
           </span>
-        </p>
+        </p> */}
       </div>
     </div>
   )

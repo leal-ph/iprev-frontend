@@ -3,26 +3,25 @@ import React, { memo, useState, useCallback, useEffect } from 'react'
 import {
   Card,
   List,
-  Input,
   Button,
   Popconfirm,
-  Select,
   Form,
   Tag,
-  Divider,
-  Checkbox,
+  Modal,
+  DatePicker,
   Tooltip,
   message,
 } from 'antd'
-import { Lawsuit, ResponseStatus, Benefit, ScheduledBenefit } from '~/types'
-import { faGavel, faTrash, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { ResponseStatus, ScheduledBenefit } from '~/types'
+import { faGavel, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { rowDisplayCenter } from '~/utils/display'
+
 import { useStores } from '~/hooks/use-stores'
 import { observer } from 'mobx-react-lite'
 import { useMediaQuery } from 'react-responsive'
 import { useForm } from 'antd/es/form/Form'
-import CustomModal from '~/assets/components/CustomModal'
+
+import moment from 'moment'
 
 interface Props {
   divCardStyle: React.CSSProperties
@@ -30,34 +29,18 @@ interface Props {
 }
 
 const ClientLawsuit = observer(({ divCardStyle, cardStyle }: Props) => {
-  const {
-    adminStore,
-    lawsuitStore,
-    lawyerStore,
-    msgraphStore,
-    clientStore,
-    authStore,
-  } = useStores()
+  const { adminStore, lawsuitStore, msgraphStore, clientStore, authStore } = useStores()
 
-  const [lawsuits, setLawsuits] = useState<Lawsuit[]>([])
   const [benefits, setBenefits] = useState<ScheduledBenefit[]>([])
   // const [privateNote, setPrivateNote] = useState<boolean>(false)
   const [newCommentModalState, setNewCommentModalState] = useState<boolean>(false)
   const [newCommentForm] = useForm()
-  const [plannerCheckBox, setPlannerCheckBox] = useState(false)
-  const [plans, setPlans] = useState([])
-  const [buckets, setBuckets] = useState([])
-  const [groupMembers, setGroupMembers] = useState([])
-  const [addLoading, setAddLoading] = useState(false)
-  const [saveLoading, setSaveLoading] = useState(false)
 
   // const history = useHistory()
 
   const isPortrait = useMediaQuery({ query: '(orientation: portrait)' })
 
-  const [selectedLawsuit, setSelectedLawsuit] = useState<Lawsuit | undefined>(undefined)
-
-  const privacy = ['Público', 'Privado']
+  const [selectedBenefit, setSelectedBenefit] = useState<ScheduledBenefit | undefined>(undefined)
 
   const refreshLawsuits = useCallback(async () => {
     try {
@@ -69,124 +52,14 @@ const ClientLawsuit = observer(({ divCardStyle, cardStyle }: Props) => {
       lawsuitStore.selectedLawsuit = undefined
       console.error(error)
     }
-  }, [lawsuitStore, adminStore.selectedClient, setLawsuits])
-
-  const selectLawsuitHandle = useCallback(
-    async (lawsuit: Lawsuit) => {
-      await lawsuitStore.loadSelectedLawsuit(lawsuit._id)
-      setSelectedLawsuit(lawsuitStore.selectedLawsuit)
-    },
-    [setSelectedLawsuit, lawsuitStore],
-  )
-
-  const excludeLawsuitHandle = useCallback(
-    async (lawsuit: Lawsuit) => {
-      await adminStore.deleteLawsuit(lawsuit._id)
-      refreshLawsuits()
-    },
-    [adminStore, refreshLawsuits],
-  )
-
-  const updateInternalNotes = useCallback(
-    async (internalNote: any, exclude: boolean, lawsuit: Lawsuit, privateNote: boolean) => {
-      if (exclude) {
-        await adminStore.deleteLawsuitInternalNote(internalNote, lawsuit._id)
-        await refreshLawsuits()
-        selectLawsuitHandle(lawsuit)
-        // setSelectedLaysuit(lawsuitStore.selectedLawsuit)
-      } else {
-        await adminStore.updateLawsuitInternalNote(
-          internalNote,
-          lawsuit._id,
-          privateNote,
-          lawyerStore.currentLawyer!.name,
-        )
-        await refreshLawsuits()
-        selectLawsuitHandle(lawsuit)
-        // setSelectedLaysuit(lawsuitStore.selectedLawsuit)
-      }
-    },
-    [adminStore, refreshLawsuits, selectLawsuitHandle, lawyerStore.currentLawyer],
-  )
-
-  const onInsertNewNote = useCallback(async () => {
-    const { comment, privacy, plan, bucket, tasktitle, members } = newCommentForm.getFieldsValue()
-
-    setSaveLoading(true)
-    let privateNote = false
-
-    if (privacy === 'Público') {
-      privateNote = false
-    } else if (privacy === 'Privado') {
-      privateNote = true
-    }
-
-    if (selectedLawsuit) {
-      await updateInternalNotes(comment, false, selectedLawsuit, privateNote)
-
-      if (!privateNote) {
-        await lawsuitStore.sendMailNotification(
-          adminStore.selectedClient!.email,
-          adminStore.selectedClient!.name,
-          lawyerStore.currentLawyer!.name,
-          lawsuitStore.selectedLawsuit!.proc_number,
-          comment,
-          false,
-        )
-      }
-
-      if (plannerCheckBox) {
-        const description = `Tarefa criada automaticamente pelo Escritório Virtual Bocayuva Advogados. \
-        \n\n - Cliente vinculado: ${adminStore.selectedClient?.name} \
-        \n - CPF vinculado: ${adminStore.selectedClient?.cpf} \
-        \n - Contato: ${adminStore.selectedClient?.telephone} / ${adminStore.selectedClient?.email}\
-        \n - Identificador do processo: ${lawsuitStore.selectedLawsuit?.proc_number} \
-        \n\n - Andamento vinculado: ${comment}`
-
-        const taskdata = {
-          planId: plan,
-          bucketId: bucket,
-          title: tasktitle,
-          assignees: members,
-          description: description,
-        }
-        const response = await msgraphStore.createTask(taskdata)
-
-        if (response === ResponseStatus.SUCCESS) {
-          message.success('Andamento criado com sucesso!')
-          setNewCommentModalState(false)
-          setSaveLoading(false)
-          return
-        } else {
-          message.error('Erro ao enviar andamento/tarefa!')
-          message.success('Andamento criado com sucesso!')
-          setSaveLoading(false)
-          return
-        }
-      } else {
-        message.success('Andamento criado com sucesso!')
-        setSaveLoading(false)
-        setNewCommentModalState(false)
-        return
-      }
-    }
-  }, [
-    msgraphStore,
-    plannerCheckBox,
-    newCommentForm,
-    selectedLawsuit,
-    updateInternalNotes,
-    adminStore.selectedClient,
-    lawsuitStore,
-    lawyerStore.currentLawyer,
-  ])
+  }, [lawsuitStore, adminStore.selectedClient])
 
   const getStatusTag = useCallback((status: string) => {
     if (status === 'Marcado') {
       return <Tag color="green">Marcado</Tag>
     } else if (status === 'Aguardando Marcação') {
       return <Tag color="gold">Aguardando Marcação</Tag>
-    } else if (status === 'Benefício Recusado') {
+    } else if (status === 'Recusado') {
       return <Tag color="red">Recusado</Tag>
     } else {
       return <Tag color="blue">Indefinido</Tag>
@@ -195,13 +68,20 @@ const ClientLawsuit = observer(({ divCardStyle, cardStyle }: Props) => {
 
   const onDeny = useCallback(
     async (benefitId: string) => {
-      const response = await clientStore.excludeBenefits(benefitId, clientStore.currentUser?._id)
+      const now = new Date()
+
+      const response = await clientStore.updateBenefitStatus(
+        benefitId,
+        adminStore.selectedClient?._id,
+        'Recusado',
+        now,
+      )
       if (response === ResponseStatus.SUCCESS) {
-        message.success('Solicitação removida com sucesso')
+        message.success('Solicitação recusada com sucesso')
         if (authStore.loggedUser?._id) {
-          await clientStore.loadClient(authStore.loggedUser._id)
-          if (clientStore.currentUser?.required_benefits) {
-            setBenefits(clientStore.currentUser.required_benefits)
+          await adminStore.loadSelectedClient(adminStore.selectedClient?._id)
+          if (adminStore.selectedClient?.required_benefits) {
+            setBenefits(adminStore.selectedClient.required_benefits)
           }
         }
         return
@@ -210,7 +90,35 @@ const ClientLawsuit = observer(({ divCardStyle, cardStyle }: Props) => {
         return
       }
     },
-    [clientStore, authStore.loggedUser],
+    [clientStore, authStore.loggedUser, adminStore],
+  )
+
+  const onSchedule = useCallback(
+    async (benefitId: string) => {
+      const { date } = newCommentForm.getFieldsValue()
+
+      const response = await clientStore.updateBenefitStatus(
+        benefitId,
+        adminStore.selectedClient?._id,
+        'Marcado',
+        date,
+      )
+      if (response === ResponseStatus.SUCCESS) {
+        message.success('Solicitação marcada com sucesso')
+        if (authStore.loggedUser?._id) {
+          await adminStore.loadSelectedClient(adminStore.selectedClient?._id)
+          if (adminStore.selectedClient?.required_benefits) {
+            setBenefits(adminStore.selectedClient.required_benefits)
+          }
+        }
+        setNewCommentModalState(false)
+        return
+      } else {
+        message.error('Erro na solicitação')
+        return
+      }
+    },
+    [clientStore, authStore.loggedUser, adminStore, newCommentForm],
   )
 
   const renderBenefit = useCallback(
@@ -253,13 +161,14 @@ const ClientLawsuit = observer(({ divCardStyle, cardStyle }: Props) => {
                   marginRight: '10px',
                   // width: isPortrait ? '30vw' : '15vw',
                 }}
+                onClick={() => setNewCommentModalState(true)}
               >
                 <FontAwesomeIcon icon={faCheck} style={{ cursor: 'pointer' }} />
               </Button>
             </Tooltip>
             <Popconfirm
               title="Deseja realmente recusar o benefício?"
-              // onConfirm={() => updateInternalNotes(internalNote, true, lawsuit, false)}
+              onConfirm={() => onDeny(benefit.benefit._id)}
               okButtonProps={{ danger: true }}
               okText="Excluir"
               cancelText="Não"
@@ -281,7 +190,7 @@ const ClientLawsuit = observer(({ divCardStyle, cardStyle }: Props) => {
         </div>
       )
     },
-    [excludeLawsuitHandle, isPortrait],
+    [getStatusTag, onDeny],
   )
 
   useEffect(() => {
@@ -290,14 +199,12 @@ const ClientLawsuit = observer(({ divCardStyle, cardStyle }: Props) => {
     }
   }, [
     msgraphStore,
-    selectedLawsuit,
     adminStore.selectedClient,
     // adminStore.deletedLawsuit,
     // adminStore.deletedLawsuitIN,
     // adminStore.updatedLawsuitIN,
     // adminStore.selectedClient,
     refreshLawsuits,
-    selectLawsuitHandle,
   ])
 
   return (
@@ -329,41 +236,14 @@ const ClientLawsuit = observer(({ divCardStyle, cardStyle }: Props) => {
                   boxShadow: '0px 0px 3px #33333380',
                 }}
                 headStyle={{ backgroundColor: '#f5f5f5' }}
-                // onClick={() => selectLawsuitHandle(lawsuit)}
+                onClick={() => setSelectedBenefit(b)}
               >
                 {renderBenefit(b)}
               </Card>
             ))}
         </List>
       </Card>
-      {/* <Card
-        className="custom-card"
-        title={<div className="custom-list-title">Status do Benefício</div>}
-        style={{
-          ...cardStyle,
-          marginLeft: isPortrait ? 0 : '5px',
-          marginTop: isPortrait ? '5px' : 0,
-          marginBottom: isPortrait ? '10px' : 0,
-        }}
-        actions={renderNewNote()}
-      >
-        <List locale={{ emptyText: 'SEM DADOS' }}>
-          {selectedLawsuit &&
-            selectedLawsuit.internal_notes?.map((note, index) => (
-              <List.Item
-                key={index}
-                style={{
-                  marginBottom: '7px',
-                  borderRadius: '3px',
-                  boxShadow: '0px 0px 3px #33333380',
-                }}
-              >
-                {renderInternalNote(note, selectedLawsuit)}
-              </List.Item>
-            ))}
-        </List>
-      </Card> */}
-      <CustomModal
+      <Modal
         visible={newCommentModalState}
         cancelButtonProps={{ style: { display: 'none' } }}
         okButtonProps={{ style: { display: 'none' } }}
@@ -371,132 +251,45 @@ const ClientLawsuit = observer(({ divCardStyle, cardStyle }: Props) => {
         onOk={() => setNewCommentModalState(false)}
         onCancel={() => setNewCommentModalState(false)}
         width={isPortrait ? '95vw' : '50%'}
-        content={
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <Card
-              className="custom-card"
-              title={
-                <span style={{ color: '#04093b', fontFamily: 'Bebas Neue', fontSize: '20px' }}>
-                  Adicionar comentário / andamento - {selectedLawsuit?.proc_number}
-                </span>
-              }
-              style={{
-                width: isPortrait ? '90vw' : '80vw',
-                marginRight: '10px',
-                height: '60vh',
-                overflowY: 'auto',
-              }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Form form={newCommentForm} layout="vertical">
+            <Form.Item
+              name="date"
+              key="date"
+              label="Selecione a data:"
+              rules={[{ required: true, message: 'Data é obrigatório!' }]}
             >
-              <Form form={newCommentForm} layout="vertical">
-                <Form.Item
-                  name="comment"
-                  key="comment"
-                  label="Texto do comentário:"
-                  rules={[{ required: true, message: 'Texto do comentário é obrigatório!' }]}
-                >
-                  <Input.TextArea allowClear className="custom-input" autoSize={{ minRows: 3 }} />
-                </Form.Item>
-                <Form.Item
-                  name="privacy"
-                  key="privacy"
-                  label="Privacidade:"
-                  rules={[{ required: true }]}
-                >
-                  <Select showSearch className="custom-select">
-                    {privacy.map((type) => (
-                      <Select.Option value={type} key={type}>
-                        {type}
-                      </Select.Option>
-                    ))}
-                  </Select>
-                </Form.Item>
-                <Form.Item name="checkboxPlanner" key="checkboxPlanner">
-                  <Checkbox
-                    checked={plannerCheckBox}
-                    onChange={() => setPlannerCheckBox(!plannerCheckBox)}
-                  >
-                    {'  '}Criar tarefa no planner
-                  </Checkbox>
-                </Form.Item>
-                <Form.Item
-                  name="tasktitle"
-                  key="tasktitle"
-                  label="Título da tarefa:"
-                  rules={[{ required: true }]}
-                >
-                  <Input allowClear className="custom-input" disabled={!plannerCheckBox} />
-                </Form.Item>
-                <Form.Item
-                  name="tasktitle"
-                  key="tasktitle"
-                  label="Título da tarefa 2:"
-                  rules={[{ required: true }]}
-                >
-                  <Input allowClear className="custom-input" disabled={!plannerCheckBox} />
-                </Form.Item>
-                <Form.Item name="plan" key="plan" label="Plano:" rules={[{ required: true }]}>
-                  <Select showSearch className="custom-select" disabled={!plannerCheckBox}>
-                    {plans.map((plan: any) => (
-                      <Select.Option value={plan.planID} key={plan.planID}>
-                        {plan.planName}
-                      </Select.Option>
-                    ))}
-                  </Select>
-                </Form.Item>
-                <Form.Item
-                  name="bucket"
-                  key="bucket"
-                  label="Coluna/Status:"
-                  rules={[{ required: true }]}
-                >
-                  <Select showSearch className="custom-select" disabled={!plannerCheckBox}>
-                    {buckets.map((bucket: any) => (
-                      <Select.Option value={bucket.id} key={bucket.id}>
-                        {bucket.bucketName}
-                      </Select.Option>
-                    ))}
-                  </Select>
-                </Form.Item>
-                <Form.Item
-                  name="members"
-                  key="members"
-                  label="Atribuir à:"
-                  rules={[{ required: true }]}
-                >
-                  <Select
-                    showSearch
-                    className="custom-select"
-                    disabled={!plannerCheckBox}
-                    mode="multiple"
-                  >
-                    {groupMembers.map((member: any) => (
-                      <Select.Option value={member.memberID} key={member.memberID}>
-                        {member.memberName}
-                      </Select.Option>
-                    ))}
-                  </Select>
-                </Form.Item>
-              </Form>
-              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <Button
-                  type="primary"
-                  style={{ width: isPortrait ? '30vw' : '20vw' }}
-                  onClick={onInsertNewNote}
-                  loading={saveLoading}
-                >
-                  SALVAR
-                </Button>
-              </div>
-            </Card>
+              <DatePicker
+                style={{
+                  width: isPortrait ? '70vw' : '12vw',
+                  marginRight: '5px',
+                  marginBottom: isPortrait ? '10px' : 0,
+                }}
+                placeholder="Selecione a data"
+                format="DD/MM/YYYY HH:mm"
+                showTime={{ defaultValue: moment('00:00', 'HH:mm') }}
+              ></DatePicker>
+            </Form.Item>
+          </Form>
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <Button
+              type="primary"
+              style={{ width: isPortrait ? '30vw' : '20vw' }}
+              onClick={() => onSchedule(selectedBenefit?.benefit._id)}
+            >
+              SALVAR
+            </Button>
           </div>
-        }
-      />
+        </div>
+      </Modal>
     </div>
   )
 })

@@ -116,7 +116,7 @@ const BenefitsScreen = observer(() => {
     const data: ColumnType<Benefit>[] = []
 
     data.push({
-      title: () => <span className="custom-tab-title">Benefício</span>,
+      title: () => <span className="custom-tab-title">Nome da empresa</span>,
       key: 'title',
       render: (value: Benefit) => {
         return <div>{value.companyName}</div>
