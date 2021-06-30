@@ -6,7 +6,7 @@ import { useStores } from '~/hooks/use-stores'
 import { observer } from 'mobx-react-lite'
 import { useMediaQuery } from 'react-responsive'
 import { policy, use_terms } from '~/pages/client/presentation/terms'
-import { contractGeneral, procuracao, contractMaternidade, contractRevisao } from './ContractsPages'
+import { contractGeneral, procuracao } from './ContractsPages'
 import { PDFInfo } from '~/types'
 
 import ReactHtmlParser from 'react-html-parser'
@@ -76,49 +76,19 @@ const ContractScreen = observer(() => {
       estado?: string,
       telefone?: string,
     ) => {
-      if (type?.toLowerCase().includes('SALÁRIO MATERNIDADE'.toLowerCase())) {
-        return contractMaternidade(
-          nome,
-          nacionalidade,
-          estadocivil,
-          cpf,
-          rg,
-          endereco,
-          CEP,
-          orgaoexpedidor,
-          cidade,
-          estado,
-          telefone,
-        )
-      } else if (type?.toLowerCase() === 'REVISÃO DE BENEFÍCIO'.toLowerCase()) {
-        return contractRevisao(
-          nome,
-          nacionalidade,
-          estadocivil,
-          cpf,
-          rg,
-          endereco,
-          CEP,
-          orgaoexpedidor,
-          cidade,
-          estado,
-          telefone,
-        )
-      } else {
-        return contractGeneral(
-          nome,
-          nacionalidade,
-          estadocivil,
-          cpf,
-          rg,
-          endereco,
-          CEP,
-          orgaoexpedidor,
-          cidade,
-          estado,
-          telefone,
-        )
-      }
+      return contractGeneral(
+        nome,
+        nacionalidade,
+        estadocivil,
+        cpf,
+        rg,
+        endereco,
+        CEP,
+        orgaoexpedidor,
+        cidade,
+        estado,
+        telefone,
+      )
     },
     [],
   )
@@ -199,7 +169,6 @@ const ContractScreen = observer(() => {
               // style={{ width: isPortrait ? '90vw' : '60vw', marginBottom: '10px' }}
             >
               {generateContract(
-                clientStore.currentUser?.profile.title,
                 clientStore.currentUser?.name,
                 'Brasileiro(a)',
                 clientStore.currentUser?.marital_status,

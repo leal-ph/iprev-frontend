@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from 'react'
+import React, { memo, useEffect, useState, useMemo } from 'react'
 import { List } from 'antd'
 import DoubleCard from '~/assets/components/DoubleCard'
 import GlobalLayout from '~/pages/GlobalLayout'
@@ -7,29 +7,28 @@ import CustomButton from '~/assets/components/CustomButton'
 import { useStores } from '~/hooks/use-stores'
 import { useCallback } from 'react'
 import { useHistory } from 'react-router-dom'
-import { Benefit } from '~/types'
+import { Benefit, ScheduledBenefit } from '~/types'
 
 const BenefitScreen = () => {
-  // const { companies, load, loading } = benefitStore
-  // const { loggedAssociated, loadAssociated, loggedUser } = authStore
+  const { benefitStore, clientStore, authStore } = useStores()
 
-  /* const scheduleList = useMemo(() => {
-    if (loggedAssociated) {
-      return loggedAssociated.benefits.map((b) => ({
+  const [benefits, setBenefits] = useState<Benefit[]>([])
+  const [scheduledBenefits, setScheduledBenefits] = useState<ScheduledBenefit[]>([])
+
+  const scheduleList = useMemo(() => {
+    if (scheduledBenefits) {
+      return scheduledBenefits.map((b) => ({
         id: b.benefit._id,
-        dateTime: b.date.toISOString(),
+        dateTime: b.date.toString(),
         name: `${b.benefit.companyName} ${b.benefit.companyCategory}`,
+        status: b.status,
         canEdit: false,
         canExclude: false,
       }))
     }
 
     return []
-  }, [loggedAssociated]) */
-
-  const { benefitStore } = useStores()
-
-  const [benefits, setBenefits] = useState<Benefit[]>([])
+  }, [scheduledBenefits])
 
   useEffect(() => {
     async function loadBenefits() {
@@ -39,22 +38,23 @@ const BenefitScreen = () => {
     loadBenefits()
   }, [benefitStore])
 
+  useEffect(() => {
+    async function loadClient() {
+      if (authStore.loggedUser?._id) {
+        await clientStore.loadClient(authStore.loggedUser._id)
+        if (clientStore.currentUser?.required_benefits) {
+          setScheduledBenefits(clientStore.currentUser.required_benefits)
+        }
+      }
+    }
+    loadClient()
+  }, [authStore.loggedUser, clientStore])
+
   const history = useHistory()
 
   const selectBenefit = useCallback((benefitId: string) => {
     console.log(benefitId)
   }, [])
-
-  const scheduleList = [
-    {
-      id: '001',
-      dateTime: 'string',
-      name: 'Comp A',
-      link: 'http://link',
-      canExclude: false,
-      canEdit: false,
-    },
-  ]
 
   return (
     <GlobalLayout
@@ -92,7 +92,7 @@ const BenefitScreen = () => {
                 ))}
               </List>
             ),
-            title: 'Empresas Convêniadas',
+            title: 'Empresas Conveniadas',
           }}
           cardTwo={{
             children: <ScheduleList itens={scheduleList} />,

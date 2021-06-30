@@ -7,7 +7,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCalendarAlt, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { displayCenter, columnDisplayStart } from '~/utils/display'
 
-import ClientDocuments from './ClientDocuments'
 import ClientLawsuit from './ClientLawsuit'
 import ClientPayment from './ClientPayment'
 
@@ -192,18 +191,6 @@ const ClientInfoScreen = observer(() => {
                         <span style={{ fontWeight: 'bold' }}>NOME:</span>
                         <span>{adminStore.selectedClient.name}</span>
                       </List.Item>
-                      {adminStore.selectedClient.camefrom && (
-                        <List.Item style={columnDisplayStart}>
-                          <span style={{ fontWeight: 'bold' }}>PROCEDÊNCIA:</span>
-                          <span>{adminStore.selectedClient.camefrom}</span>
-                        </List.Item>
-                      )}
-                      {adminStore.selectedClient.profile && (
-                        <List.Item style={columnDisplayStart}>
-                          <span style={{ fontWeight: 'bold' }}>PERFIL:</span>
-                          <span>{adminStore.selectedClient.profile.title}</span>
-                        </List.Item>
-                      )}
                       {adminStore.selectedClient.birthdate && (
                         <List.Item style={columnDisplayStart}>
                           <span style={{ fontWeight: 'bold' }}>DATA DE NASCIMENTO:</span>

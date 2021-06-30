@@ -1,13 +1,13 @@
 import { faCalendarAlt, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { List, Typography } from 'antd'
-import React, { memo } from 'react'
+import { List, Tag } from 'antd'
+import React, { memo, useCallback } from 'react'
 
 interface ScheduleItem {
   id: string
   dateTime: string
   name: string
-  link?: string
+  status: string
   canExclude?: boolean
   canEdit?: boolean
 }
@@ -19,6 +19,14 @@ interface Props {
 }
 
 const ScheduleList = ({ itens, onExclude, onEdit }: Props) => {
+  const getStatusTag = useCallback((status: string) => {
+    if (status === 'Marcado') {
+      return <Tag color="green">Marcado</Tag>
+    } else {
+      return <Tag color="gold">Aguardando Marcação</Tag>
+    }
+  }, [])
+
   return (
     <List>
       {itens.map((i) => (
@@ -46,16 +54,9 @@ const ScheduleList = ({ itens, onExclude, onEdit }: Props) => {
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', marginLeft: '5px' }}>
                 <span>{i.name}</span>
-                <span>{i.dateTime}</span>
+                <span>Status: {getStatusTag(i.status)}</span>
               </div>
             </div>
-            {i.link && (
-              <div>
-                <Typography.Link href={i.link} target="_blank">
-                  Entrar na reunião
-                </Typography.Link>
-              </div>
-            )}
             {(i.canEdit || i.canExclude) && (
               <div style={{ display: 'flex', flexDirection: 'row' }}>
                 {i.canEdit && onEdit && (

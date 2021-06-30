@@ -15,7 +15,6 @@ import LawsuitListScreen from '~/pages/admin/lawyer/LawsuitListScreen'
 import AdminLoginScreen from '~/pages/admin/AdminLoginScreen'
 import AdminNewPassScreen from './pages/admin/AdminNewPassScreen'
 import LifeContribForm from './pages/client/presentation/LifeContribForm'
-import BenefitsForm from './pages/client/presentation/BenefitsForm'
 import AdditionalForm from './pages/client/presentation/AdditionalForm'
 import RegisterSuccessScreen from './pages/client/main/RegisterSuccessScreen'
 import AceiteScreen from './pages/client/main/AceiteScreen'
@@ -23,7 +22,6 @@ import ContractScreen from './pages/client/main/ContractScreen'
 import PaymentScreen from './pages/client/payment/PaymentScreen'
 import MenuClientScreen from './pages/client/main/MenuClientScreen'
 import CalendarClientScreen from '~/pages/client/calendar/CalendarScreen'
-import AttachDocuments from './pages/client/document/AttachDocuments'
 import ClientLoginScreen from '~/pages/client/ClientLoginScreen'
 import LawsuitScreen from './pages/client/lawsuit/LawsuitScreen'
 import SignScreen from './pages/client/document/SignScreen'
@@ -49,14 +47,12 @@ ReactDOM.render(
       <AdminRoute path="/admin" exact component={MenuScreen} />
       <PreAuthRoute path="/client/form" component={LifeContribForm} />
       <PreAuthRoute path="/client/additional" component={AdditionalForm} />
-      <PreAuthRoute path="/client/benefits" component={BenefitsForm} />
       <PrivateRoute path="/client/registersuccess" component={RegisterSuccessScreen} />
       <PrivateRoute path="/client/aceite" component={AceiteScreen} />
       <PrivateRoute path="/client/contract" component={ContractScreen} />
       <PrivateRoute path="/client/payment" component={PaymentScreen} />
       <PrivateRoute path="/client/calendar" component={CalendarClientScreen} />
       <PrivateRoute path="/client/menu" component={MenuClientScreen} />
-      <PrivateRoute path="/client/documents" exact component={AttachDocuments} />
       <PrivateRoute path="/client/documents/sign" component={SignScreen} />
       <PrivateRoute path="/client/lawsuits" component={LawsuitScreen} />
       <PrivateRoute path="/client/profile" component={ClientProfile} />

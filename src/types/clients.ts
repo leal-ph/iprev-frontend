@@ -1,17 +1,16 @@
 import { Profile } from './profile'
 import { Payment } from './payment'
-import { Document } from './document'
+import { ScheduledBenefit } from './benefit'
 
 export interface Client {
-  _id: string
-  user: string
+  _id: any
   name: string
   lastname: string
   fullname?: string
   cpf: string
   rg: string
-  camefrom?: string
   payments: Payment[]
+  required_benefits?: ScheduledBenefit[]
   birthdate?: Date
   address?: string
   zipcode?: string
@@ -19,16 +18,15 @@ export interface Client {
   state?: string
   telephone?: string
   email: string
-  profile: Profile
   form_answers: any[]
+  password?: string
   email_confirmed?: boolean
-  documents: Document[]
   internal_notes?: any
-  last_token?: string
   finished?: boolean
   profession?: string
   marital_status?: string
   rg_consignor?: string
+  user?: string
   verification_timestamp?: number
   renewpassword_timestamp?: number
   renewpassword_permission?: boolean

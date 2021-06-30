@@ -76,7 +76,7 @@ const AceiteScreen = observer(() => {
         item: {
           description: 'HONORÁRIOS',
           quantity: 1,
-          price_cents: clientStore.currentUser.profile.initialPriceCents,
+          price_cents: 5000,
         },
         type: undefined,
         expiry_date: new Date(date.setTime(date.getTime() + 14 * 86400000)),

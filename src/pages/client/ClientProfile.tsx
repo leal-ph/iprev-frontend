@@ -33,7 +33,7 @@ const ClientProfile = observer(() => {
     form.validateFields().then(async () => {
       if (clientStore.currentUser) {
         const status = await clientStore.editUser(
-          { ...form.getFieldsValue(), profile: clientStore.currentUser.profile._id },
+          { ...form.getFieldsValue() },
           clientStore.currentUser._id,
         )
         if (status === ResponseStatus.SUCCESS) {
@@ -85,7 +85,6 @@ const ClientProfile = observer(() => {
         name: clientStore.currentUser.name,
         birthdate: clientStore.currentUser.birthdate,
         number: clientStore.currentUser.telephone,
-        profile: clientStore.currentUser.profile.title,
         cpf: clientStore.currentUser.cpf,
         rg: clientStore.currentUser.rg,
         zipcode: clientStore.currentUser.zipcode,

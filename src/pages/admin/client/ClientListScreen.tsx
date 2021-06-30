@@ -63,7 +63,6 @@ const ClientListScreen = observer(() => {
 
   const isPortrait = useMediaQuery({ query: '(orientation: portrait)' })
 
-  const [profileFilters] = useState<any[]>([])
   const [CPF, setCPF] = useState('')
   const [newClientModalState, setNewClientModalState] = useState(false)
   const [editModalState, setEditModalState] = useState(false)
@@ -240,10 +239,8 @@ const ClientListScreen = observer(() => {
         name: adminStore.selectedClient.name,
         birthdate: adminStore.selectedClient.birthdate,
         number: adminStore.selectedClient.telephone,
-        profile: adminStore.selectedClient.profile.title,
         cpf: adminStore.selectedClient.cpf,
         rg: adminStore.selectedClient.rg,
-        camefrom: adminStore.selectedClient.camefrom,
         zipcode: adminStore.selectedClient.zipcode,
         city: adminStore.selectedClient.city,
         address: adminStore.selectedClient.address,
@@ -279,7 +276,7 @@ const ClientListScreen = observer(() => {
     form.validateFields().then(async () => {
       if (adminStore.selectedClient) {
         const status = await clientStore.editUser(
-          { ...form.getFieldsValue(), profile: adminStore.selectedClient.profile._id },
+          { ...form.getFieldsValue() },
           adminStore.selectedClient._id,
         )
         if (status === ResponseStatus.SUCCESS) {
@@ -456,15 +453,7 @@ const ClientListScreen = observer(() => {
     })
 
     return data
-  }, [
-    checkPayments,
-    deleteHandler,
-    editHandler,
-    infoHandle,
-    profileFilters,
-    authStore.loggedUser,
-    isPortrait,
-  ])
+  }, [checkPayments, deleteHandler, editHandler, infoHandle, authStore.loggedUser, isPortrait])
 
   useEffect(() => {
     if (authStore.loggedUser) {
