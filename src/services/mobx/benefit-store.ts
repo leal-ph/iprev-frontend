@@ -5,6 +5,7 @@ import * as benefitApi from '~/services/api/benefit'
 class BenefitStore {
   @observable benefits: Benefit[] = []
   @observable loadingBenefits = false
+  @observable savingBenefits = false
 
   @observable userBenefit: Benefit | undefined = undefined
   @observable loadingUserBenefit = false

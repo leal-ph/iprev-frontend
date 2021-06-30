@@ -186,25 +186,38 @@ class ClientStore {
   }
 
   @action.bound
-  async updateProfile(profileId: string): Promise<ResponseStatus> {
+  async updateBenefits(benefitId: string, clientId: string): Promise<ResponseStatus> {
     this.saveLoading = true
-    if (this.currentUser) {
-      const response = await clientApi.updateProfile(this.currentUser._id, profileId)
-      try {
-        if (response.status === 200) {
-          this.currentUser = response.data
-          this.saveLoading = false
-          return ResponseStatus.SUCCESS
-        } else {
-          this.currentUser = undefined
-          this.saveLoading = false
-          return ResponseStatus.INTERNAL_ERROR
-        }
-      } catch {
+
+    const response = await clientApi.updateBenefits(benefitId, clientId)
+    try {
+      if (response.status === 200) {
+        this.saveLoading = false
+        return ResponseStatus.SUCCESS
+      } else {
+        this.saveLoading = false
         return ResponseStatus.INTERNAL_ERROR
       }
-    } else {
-      return ResponseStatus.CLIENT_UNDEFINED
+    } catch {
+      return ResponseStatus.INTERNAL_ERROR
+    }
+  }
+
+  @action.bound
+  async excludeBenefits(benefitId: string, clientId: string): Promise<ResponseStatus> {
+    this.saveLoading = true
+
+    const response = await clientApi.excludeBenefits(benefitId, clientId)
+    try {
+      if (response.status === 200) {
+        this.saveLoading = false
+        return ResponseStatus.SUCCESS
+      } else {
+        this.saveLoading = false
+        return ResponseStatus.INTERNAL_ERROR
+      }
+    } catch {
+      return ResponseStatus.INTERNAL_ERROR
     }
   }
 

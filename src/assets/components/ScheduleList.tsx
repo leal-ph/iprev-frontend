@@ -1,6 +1,6 @@
 import { faCalendarAlt, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { List, Tag } from 'antd'
+import { List, Tag, Popconfirm } from 'antd'
 import React, { memo, useCallback } from 'react'
 
 interface ScheduleItem {
@@ -70,11 +70,18 @@ const ScheduleList = ({ itens, onExclude, onEdit }: Props) => {
                 )}
                 {i.canExclude && onExclude && (
                   <div>
-                    <FontAwesomeIcon
-                      icon={faTrash}
-                      onClick={() => onExclude(i.id)}
-                      style={{ cursor: 'pointer' }}
-                    />
+                    <Popconfirm
+                      title="Deseja realmente deletar o registro?"
+                      onConfirm={() => onExclude(i.id)}
+                      okButtonProps={{ danger: true }}
+                      okText="Excluir"
+                      cancelText="Não"
+                    >
+                      <FontAwesomeIcon
+                        icon={faTrash}
+                        style={{ cursor: 'pointer', marginRight: '15px' }}
+                      />
+                    </Popconfirm>
                   </div>
                 )}
               </div>

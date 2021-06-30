@@ -74,8 +74,12 @@ export const updateAdditionalInfo = (client: Client): Promise<Response<Client>> 
   return post(`${endpoint}/users/updateadditional/${client._id}`, { ...client })
 }
 
-export const updateProfile = (clientId: string, profileId: string): Promise<Response<Client>> => {
-  return post(`${endpoint}/users/updateprofile/${clientId}`, { profile: profileId })
+export const updateBenefits = (benefitId: string, clientId: string): Promise<Response<Client>> => {
+  return post(`${endpoint}/users/${clientId}/updateUserReqBenefits`, { benefitId: benefitId })
+}
+
+export const excludeBenefits = (benefitId: string, clientId: string): Promise<Response<Client>> => {
+  return post(`${endpoint}/users/${clientId}/deleteUserReqBenefits`, { benefitId: benefitId })
 }
 
 export const updateClientPassword = (newPassData: any, userID: string): Promise<any> => {
