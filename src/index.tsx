@@ -15,6 +15,7 @@ import LawsuitListScreen from '~/pages/admin/lawyer/LawsuitListScreen'
 import AdminLoginScreen from '~/pages/admin/AdminLoginScreen'
 import AdminNewPassScreen from './pages/admin/AdminNewPassScreen'
 import LifeContribForm from './pages/client/presentation/LifeContribForm'
+import ClientBenefitsScreen from './pages/client/benefits/BenefitsScreen'
 import AdditionalForm from './pages/client/presentation/AdditionalForm'
 import RegisterSuccessScreen from './pages/client/main/RegisterSuccessScreen'
 import AceiteScreen from './pages/client/main/AceiteScreen'
@@ -48,6 +49,7 @@ ReactDOM.render(
       <PreAuthRoute path="/client/form" component={LifeContribForm} />
       <PreAuthRoute path="/client/additional" component={AdditionalForm} />
       <PrivateRoute path="/client/registersuccess" component={RegisterSuccessScreen} />
+      <PrivateRoute path="/client/benefit" component={ClientBenefitsScreen} />
       <PrivateRoute path="/client/aceite" component={AceiteScreen} />
       <PrivateRoute path="/client/contract" component={ContractScreen} />
       <PrivateRoute path="/client/payment" component={PaymentScreen} />
