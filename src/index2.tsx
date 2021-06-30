@@ -15,6 +15,7 @@ import LawsuitListScreen from '~/pages/admin/lawyer/LawsuitListScreen'
 import AdminLoginScreen from '~/pages/admin/AdminLoginScreen'
 import AdminNewPassScreen from './pages/admin/AdminNewPassScreen'
 import LifeContribForm from './pages/client/presentation/LifeContribForm'
+import ClientBenefitsScreen from './pages/client/benefits/BenefitsScreen'
 import AdditionalForm from './pages/client/presentation/AdditionalForm'
 import RegisterSuccessScreen from './pages/client/main/RegisterSuccessScreen'
 import AceiteScreen from './pages/client/main/AceiteScreen'
@@ -26,16 +27,10 @@ import ClientLoginScreen from '~/pages/client/ClientLoginScreen'
 import LawsuitScreen from './pages/client/lawsuit/LawsuitScreen'
 import SignScreen from './pages/client/document/SignScreen'
 
-import {
-  PreAuthRoute,
-  PrivateRoute,
-  AdminRoute,
-  SuperAdminRoute,
-  LandingRoute,
-} from './pages/Routes'
+import { LandingRoute } from './pages/Routes'
 import ClientProfile from './pages/client/ClientProfile'
 import LawyerProfile from './pages/admin/LawyerProfile'
-import ProfilesScreen from './pages/admin/client/BenefitsScreen'
+import BenefitsScreen from './pages/admin/client/BenefitsScreen'
 
 ReactDOM.render(
   <BrowserRouter>
@@ -44,26 +39,27 @@ ReactDOM.render(
       <LandingRoute path="/client" exact component={Client} />
       <Route path="/client/login" component={ClientLoginScreen} />
       <Route path="/admin/login" component={AdminLoginScreen} />
-      <AdminRoute path="/admin" exact component={MenuScreen} />
-      <PreAuthRoute path="/client/form" component={LifeContribForm} />
-      <PreAuthRoute path="/client/additional" component={AdditionalForm} />
-      <PrivateRoute path="/client/registersuccess" component={RegisterSuccessScreen} />
-      <PrivateRoute path="/client/aceite" component={AceiteScreen} />
-      <PrivateRoute path="/client/contract" component={ContractScreen} />
-      <PrivateRoute path="/client/payment" component={PaymentScreen} />
-      <PrivateRoute path="/client/calendar" component={CalendarClientScreen} />
-      <PrivateRoute path="/client/menu" component={MenuClientScreen} />
-      <PrivateRoute path="/client/documents/sign" component={SignScreen} />
-      <PrivateRoute path="/client/lawsuits" component={LawsuitScreen} />
-      <PrivateRoute path="/client/profile" component={ClientProfile} />
-      <AdminRoute path="/admin/calendar" component={CalendarAdminScreen} />
-      <AdminRoute path="/admin/clients" exact component={ClientScreen} />
-      <SuperAdminRoute path="/admin/lawyers" component={AdminScreen} />
-      <AdminRoute path="/admin/clients/info" component={ClientInfoScreen} />
-      <AdminRoute path="/admin/recover" component={AdminNewPassScreen} />
-      <AdminRoute path="/admin/lawsuits" component={LawsuitListScreen} />
-      <AdminRoute path="/admin/profile" component={LawyerProfile} />
-      <AdminRoute path="/admin/benefits" component={ProfilesScreen} />
+      <Route path="/admin" exact component={MenuScreen} />
+      <Route path="/client/form" component={LifeContribForm} />
+      <Route path="/client/additional" component={AdditionalForm} />
+      <Route path="/client/benefit" component={ClientBenefitsScreen} />
+      <Route path="/client/registersuccess" component={RegisterSuccessScreen} />
+      <Route path="/client/aceite" component={AceiteScreen} />
+      <Route path="/client/contract" component={ContractScreen} />
+      <Route path="/client/payment" component={PaymentScreen} />
+      <Route path="/client/calendar" component={CalendarClientScreen} />
+      <Route path="/client/menu" component={MenuClientScreen} />
+      <Route path="/client/documents/sign" component={SignScreen} />
+      <Route path="/client/lawsuits" component={LawsuitScreen} />
+      <Route path="/client/profile" component={ClientProfile} />
+      <Route path="/admin/calendar" component={CalendarAdminScreen} />
+      <Route path="/admin/clients" exact component={ClientScreen} />
+      <Route path="/admin/lawyers" component={AdminScreen} />
+      <Route path="/admin/clients/info" component={ClientInfoScreen} />
+      <Route path="/admin/recover" component={AdminNewPassScreen} />
+      <Route path="/admin/lawsuits" component={LawsuitListScreen} />
+      <Route path="/admin/profile" component={LawyerProfile} />
+      <Route path="/admin/benefits" component={BenefitsScreen} />
     </Switch>
   </BrowserRouter>,
   document.getElementById('root'),
