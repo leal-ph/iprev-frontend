@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCalendarAlt, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { displayCenter, columnDisplayStart } from '~/utils/display'
 
-import ClientLawsuit from './ClientLawsuit'
+import ClientBenefits from './ClientBenefits'
 import ClientPayment from './ClientPayment'
 
 import { useHistory } from 'react-router-dom'
@@ -303,7 +303,7 @@ const ClientInfoScreen = observer(() => {
                 </div>
               </TabPane>
               <TabPane tab={<span className="custom-tab-title">Benefícios</span>} key="2">
-                <ClientLawsuit divCardStyle={divStyle} cardStyle={cardStyle} />
+                <ClientBenefits divCardStyle={divStyle} cardStyle={cardStyle} />
               </TabPane>
               <TabPane tab={<span className="custom-tab-title">Pagamentos</span>} key="3">
                 <ClientPayment divCardStyle={divStyle} cardStyle={cardStyle} />
