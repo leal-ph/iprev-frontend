@@ -33,7 +33,7 @@ const DoubleCard = ({ cardOne, cardTwo }: Props) => {
           ...cardOne.style,
           marginRight: isPortrait ? 0 : '5px',
           marginBottom: isPortrait ? '5px' : 0,
-          width: isPortrait ? '45vw' : '40vw',
+          width: isPortrait ? '90vw' : '40vw',
           height: isPortrait ? '50vh' : '75vh',
           overflowY: 'auto',
         }}
@@ -47,7 +47,7 @@ const DoubleCard = ({ cardOne, cardTwo }: Props) => {
           ...cardTwo.style,
           marginLeft: isPortrait ? 0 : '5px',
           marginTop: isPortrait ? '5px' : 0,
-          width: isPortrait ? '45vw' : '40vw',
+          width: isPortrait ? '90vw' : '40vw',
           height: isPortrait ? '50vh' : '75vh',
           overflowY: 'auto',
         }}
