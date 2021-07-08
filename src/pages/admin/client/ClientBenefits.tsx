@@ -28,31 +28,27 @@ interface Props {
   cardStyle: React.CSSProperties
 }
 
-const ClientLawsuit = observer(({ divCardStyle, cardStyle }: Props) => {
-  const { adminStore, lawsuitStore, msgraphStore, clientStore, authStore } = useStores()
+const ClientBenefits = observer(({ divCardStyle, cardStyle }: Props) => {
+  const { adminStore, clientStore, authStore } = useStores()
 
   const [benefits, setBenefits] = useState<ScheduledBenefit[]>([])
-  // const [privateNote, setPrivateNote] = useState<boolean>(false)
-  const [newCommentModalState, setNewCommentModalState] = useState<boolean>(false)
-  const [newCommentForm] = useForm()
-
-  // const history = useHistory()
+  const [scheduleModalState, setScheduleModalState] = useState<boolean>(false)
+  const [scheduleForm] = useForm()
 
   const isPortrait = useMediaQuery({ query: '(orientation: portrait)' })
 
   const [selectedBenefit, setSelectedBenefit] = useState<ScheduledBenefit | undefined>(undefined)
 
-  const refreshLawsuits = useCallback(async () => {
+  const refreshBenefits = useCallback(async () => {
     try {
       if (adminStore.selectedClient && adminStore.selectedClient.required_benefits) {
-        // await lawsuitStore.loadClientLawsuits(adminStore.selectedClient._id)
         setBenefits(adminStore.selectedClient.required_benefits)
       }
     } catch (error) {
-      lawsuitStore.selectedLawsuit = undefined
+      setSelectedBenefit(undefined)
       console.error(error)
     }
-  }, [lawsuitStore, adminStore.selectedClient])
+  }, [adminStore.selectedClient])
 
   const getStatusTag = useCallback((status: string) => {
     if (status === 'Marcado') {
@@ -95,7 +91,7 @@ const ClientLawsuit = observer(({ divCardStyle, cardStyle }: Props) => {
 
   const onSchedule = useCallback(
     async (benefitId: string) => {
-      const { date } = newCommentForm.getFieldsValue()
+      const { date } = scheduleForm.getFieldsValue()
 
       const response = await clientStore.updateBenefitStatus(
         benefitId,
@@ -111,14 +107,14 @@ const ClientLawsuit = observer(({ divCardStyle, cardStyle }: Props) => {
             setBenefits(adminStore.selectedClient.required_benefits)
           }
         }
-        setNewCommentModalState(false)
+        setScheduleModalState(false)
         return
       } else {
         message.error('Erro na solicitação')
         return
       }
     },
-    [clientStore, authStore.loggedUser, adminStore, newCommentForm],
+    [clientStore, authStore.loggedUser, adminStore, scheduleForm],
   )
 
   const renderBenefit = useCallback(
@@ -161,7 +157,7 @@ const ClientLawsuit = observer(({ divCardStyle, cardStyle }: Props) => {
                   marginRight: '10px',
                   // width: isPortrait ? '30vw' : '15vw',
                 }}
-                onClick={() => setNewCommentModalState(true)}
+                onClick={() => setScheduleModalState(true)}
               >
                 <FontAwesomeIcon icon={faCheck} style={{ cursor: 'pointer' }} />
               </Button>
@@ -195,17 +191,9 @@ const ClientLawsuit = observer(({ divCardStyle, cardStyle }: Props) => {
 
   useEffect(() => {
     if (adminStore.selectedClient && adminStore.selectedClient._id) {
-      refreshLawsuits()
+      refreshBenefits()
     }
-  }, [
-    msgraphStore,
-    adminStore.selectedClient,
-    // adminStore.deletedLawsuit,
-    // adminStore.deletedLawsuitIN,
-    // adminStore.updatedLawsuitIN,
-    // adminStore.selectedClient,
-    refreshLawsuits,
-  ])
+  }, [adminStore.selectedClient, refreshBenefits])
 
   return (
     <div style={divCardStyle}>
@@ -244,12 +232,12 @@ const ClientLawsuit = observer(({ divCardStyle, cardStyle }: Props) => {
         </List>
       </Card>
       <Modal
-        visible={newCommentModalState}
+        visible={scheduleModalState}
         cancelButtonProps={{ style: { display: 'none' } }}
         okButtonProps={{ style: { display: 'none' } }}
         destroyOnClose
-        onOk={() => setNewCommentModalState(false)}
-        onCancel={() => setNewCommentModalState(false)}
+        onOk={() => setScheduleModalState(false)}
+        onCancel={() => setScheduleModalState(false)}
         width={isPortrait ? '95vw' : '50%'}
       >
         <div
@@ -260,7 +248,7 @@ const ClientLawsuit = observer(({ divCardStyle, cardStyle }: Props) => {
             alignItems: 'center',
           }}
         >
-          <Form form={newCommentForm} layout="vertical">
+          <Form form={scheduleForm} layout="vertical">
             <Form.Item
               name="date"
               key="date"
@@ -294,4 +282,4 @@ const ClientLawsuit = observer(({ divCardStyle, cardStyle }: Props) => {
   )
 })
 
-export default memo(ClientLawsuit)
+export default memo(ClientBenefits)
