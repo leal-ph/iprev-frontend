@@ -10,7 +10,7 @@ import React, { memo, useCallback, useEffect, useState } from 'react'
 import { useMediaQuery } from 'react-responsive'
 import { useHistory } from 'react-router-dom'
 import { useStores } from '~/hooks/use-stores'
-import AdminLayout from '~/pages/GlobalLayout'
+import AdminLayout from '~/assets/components/GlobalLayout'
 import { Meeting, MeetingData, ResponseStatus } from '~/types'
 import {
   MSG_FIELDS_NEEDED,

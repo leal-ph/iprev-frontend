@@ -4,7 +4,7 @@ import { Card, Form, Input, Button, message } from 'antd'
 import { useForm } from 'antd/es/form/Form'
 
 import Advogados from '~/assets/img/login@2x.png'
-import AdminLayout from '../GlobalLayout'
+import AdminLayout from '~/assets/components/GlobalLayout'
 import { rowDisplayCenter } from '~/utils/display'
 import { useHistory } from 'react-router-dom'
 import { useStores } from '~/hooks/use-stores'

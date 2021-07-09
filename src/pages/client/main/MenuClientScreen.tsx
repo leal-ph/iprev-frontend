@@ -1,6 +1,6 @@
 import React, { memo, useEffect } from 'react'
-import ClientLayout from '~/pages/GlobalLayout'
-import MenuCard from '../../MenuCard'
+import ClientLayout from '~/assets/components/GlobalLayout'
+import MenuCard from '~/assets/components/MenuCard'
 import { useStores } from '~/hooks/use-stores'
 
 import Calendario from '~/assets/img/calendarioiprev@2x.png'

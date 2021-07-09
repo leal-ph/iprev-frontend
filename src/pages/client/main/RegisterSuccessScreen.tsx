@@ -1,7 +1,7 @@
 import React, { memo } from 'react'
-import ClientLayout from '~/pages/GlobalLayout'
+import ClientLayout from '~/assets/components/GlobalLayout'
 // import { Layout } from 'antd'
-import MenuCard from '../../MenuCard'
+import MenuCard from '~/assets/components/MenuCard'
 
 import Cliente from '~/assets/img/associados@2x.png'
 import Processo from '~/assets/img/judicial@2x.png'

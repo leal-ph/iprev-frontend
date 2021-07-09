@@ -1,5 +1,5 @@
 import React, { memo } from 'react'
-import ClientLayout from '~/pages/GlobalLayout'
+import ClientLayout from '~/assets/components/GlobalLayout'
 import BasicForm from './presentation/BasicForm'
 
 const Client = () => {

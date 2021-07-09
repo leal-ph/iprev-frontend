@@ -3,14 +3,14 @@ import { observer } from 'mobx-react-lite'
 import { useStores } from '~/hooks/use-stores'
 import { Form, Card, Input, Button, message, Select } from 'antd'
 
-import ClientLayout from '~/pages/GlobalLayout'
+import ClientLayout from '~/assets/components/GlobalLayout'
 import { useHistory } from 'react-router-dom'
 import { ResponseStatus } from '~/types'
 import { MSG_UPDATE_USER_SUCCESS, MSG_UPDATE_USER_ERROR } from '~/utils/messages'
 
 import NumberFormat from 'react-number-format'
 import { useMediaQuery } from 'react-responsive'
-import { titleStyle } from '../styles'
+import { titleStyle } from '../../styles'
 
 const ClientProfile = observer(() => {
   const { authStore, lawyerStore, msgraphStore, groupStore } = useStores()

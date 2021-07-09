@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import React, { memo, useState, useMemo, useCallback, useEffect } from 'react'
-import AdminLayout from '../../GlobalLayout'
+import AdminLayout from '~/assets/components/GlobalLayout'
 import { Lawyer } from '~/types'
 import {
   Table,

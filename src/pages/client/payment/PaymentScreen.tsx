@@ -2,7 +2,7 @@ import React, { memo, useEffect, useState, useCallback } from 'react'
 
 import { Radio, Card, message, Select } from 'antd'
 
-import ClientLayout from '~/pages/GlobalLayout'
+import ClientLayout from '~/assets/components/GlobalLayout'
 
 import { PaymentItem, ResponseStatus, Payment, PaymentStatus, PaymentPayer } from '~/types'
 import { useStores } from '~/hooks/use-stores'

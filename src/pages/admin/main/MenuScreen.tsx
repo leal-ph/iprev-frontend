@@ -1,7 +1,7 @@
 import React, { memo, useEffect } from 'react'
-import AdminLayout from '~/pages/GlobalLayout'
+import AdminLayout from '~/assets/components/GlobalLayout'
 import { Layout } from 'antd'
-import MenuCard from '../../MenuCard'
+import MenuCard from '~/assets/components/MenuCard'
 
 import Calendario from '~/assets/img/calendarioiprev@2x.png'
 import Associados from '~/assets/img/associados@2x.png'
@@ -14,9 +14,6 @@ import { useMediaQuery } from 'react-responsive'
 const { Content } = Layout
 
 const MenuScreen = () => {
-  // TODO: Adicionar Ações para Mover em Direção as outras telas.
-  // TODO: Verificar Como Colocar a Página até o final.
-  // TODO: Deixar Responsivo
   const { authStore, lawyerStore, clientStore } = useStores()
 
   const history = useHistory()

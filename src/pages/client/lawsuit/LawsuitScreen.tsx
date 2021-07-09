@@ -7,7 +7,7 @@ import { observer } from 'mobx-react-lite'
 
 import { useStores } from '~/hooks/use-stores'
 
-import ClientLayout from '~/pages/GlobalLayout'
+import ClientLayout from '~/assets/components/GlobalLayout'
 import { useMediaQuery } from 'react-responsive'
 import { titleStyle } from '../../styles'
 

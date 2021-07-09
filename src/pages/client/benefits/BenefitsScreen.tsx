@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useState, useMemo } from 'react'
 import { List, message } from 'antd'
 import DoubleCard from '~/assets/components/DoubleCard'
-import GlobalLayout from '~/pages/GlobalLayout'
+import GlobalLayout from '~/assets/components/GlobalLayout'
 import ScheduleList from '~/assets/components/ScheduleList'
 import CustomButton from '~/assets/components/CustomButton'
 import { useStores } from '~/hooks/use-stores'

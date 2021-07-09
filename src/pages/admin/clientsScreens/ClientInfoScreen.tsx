@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import React, { memo, useState, useCallback, useEffect } from 'react'
-import AdminLayout from '../../GlobalLayout'
+import AdminLayout from '~/assets/components/GlobalLayout'
 import { Meeting, ResponseStatus } from '~/types'
 import { Layout, Card, Tabs, List, message, Typography, Popconfirm } from 'antd'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

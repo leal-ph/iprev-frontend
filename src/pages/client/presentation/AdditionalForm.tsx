@@ -3,7 +3,7 @@ import { Card, Form, Input, Button, message, Select } from 'antd'
 import { useForm } from 'antd/es/form/Form'
 
 import PresentationLayout from './PresentationLayout'
-import ClientLayout from '~/pages/GlobalLayout'
+import ClientLayout from '~/assets/components/GlobalLayout'
 import NumberFormat from 'react-number-format'
 
 import { useStores } from '~/hooks/use-stores'

@@ -4,7 +4,7 @@ import { Card, Form, Input, Button, message } from 'antd'
 import { useForm } from 'antd/es/form/Form'
 
 import Clientes from '~/assets/img/login.png'
-import ClientLayout from '../GlobalLayout'
+import ClientLayout from '~/assets/components/GlobalLayout'
 import CustomModal from '~/assets/components/CustomModal'
 import { rowDisplayCenter } from '~/utils/display'
 

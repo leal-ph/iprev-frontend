@@ -1,5 +1,5 @@
 import React, { memo, useCallback, useEffect, useState } from 'react'
-import ClientLayout from '~/pages/GlobalLayout'
+import ClientLayout from '~/assets/components/GlobalLayout'
 import { Layout, Card, Checkbox, Button, message, Modal } from 'antd'
 import { useStores } from '~/hooks/use-stores'
 import { useHistory } from 'react-router-dom'

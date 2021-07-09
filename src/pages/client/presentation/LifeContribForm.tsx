@@ -2,7 +2,7 @@ import React, { memo, useState, useCallback, useEffect } from 'react'
 import { Card, Radio, Button, Input, Select } from 'antd'
 import PresentationLayout from './PresentationLayout'
 import { useHistory } from 'react-router-dom'
-import ClientLayout from '~/pages/GlobalLayout'
+import ClientLayout from '~/assets/components/GlobalLayout'
 
 import { observer } from 'mobx-react-lite'
 import { useStores } from '~/hooks/use-stores'

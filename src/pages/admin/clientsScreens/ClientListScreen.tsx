@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
 import React, { memo, useState, useMemo, useCallback, useEffect } from 'react'
 import { observer } from 'mobx-react-lite'
-import AdminLayout from '../../GlobalLayout'
+import AdminLayout from '~/assets/components/GlobalLayout'
 import { Client, NewClient, ResponseStatus } from '~/types'
 import {
   Table,

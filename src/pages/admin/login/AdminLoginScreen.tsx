@@ -6,7 +6,7 @@ import { useForm } from 'antd/es/form/Form'
 import * as EmailValidator from 'email-validator'
 
 import Advogados from '~/assets/img/login.png'
-import AdminLayout from '../GlobalLayout'
+import AdminLayout from '~/assets/components/GlobalLayout'
 import { rowDisplayCenter } from '~/utils/display'
 
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
@@ -24,7 +24,7 @@ import {
 } from '~/utils/messages'
 import { useHistory } from 'react-router-dom'
 import { useMediaQuery } from 'react-responsive'
-import { titleStyle } from '../styles'
+import { titleStyle } from '../../styles'
 
 const AdminLoginScreen = () => {
   const { authStore } = useStores()
