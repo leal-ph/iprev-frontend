@@ -19,3 +19,5 @@
 
 - types
     - Tipagem em geral
+
+- modificações gerais
